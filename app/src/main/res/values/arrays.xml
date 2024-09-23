@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="animal_types">
+        <item>Cow</item>
+        <item>Buffalo</item>
+    </string-array>
+    <string-array name="animal_desc">
+        <item>Crossbred Dairy Cow</item>
+        <item>Milch Buffalo</item>
+    </string-array>
+    <array name="animal_icons">
+        <item>@drawable/ic_animal_cow</item>
+        <item>@drawable/ic_animal_buffalo</item>
+    </array>
+</resources>

@@ -1,0 +1,206 @@
+{
+  "0": [
+    {
+      "milk_yield": 5,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 0,
+          "green_fodder": 35,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 1.8,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 5.3,
+          "green_fodder": 2,
+          "dry_roughage": 4
+        }
+      }
+    },
+    {
+      "milk_yield": 7.5,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 1.2,
+          "green_fodder": 35,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 3,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 6.8,
+          "green_fodder": 2,
+          "dry_roughage": 4
+        }
+      }
+    },
+    {
+      "milk_yield": 10,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 2.4,
+          "green_fodder": 35,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 4.2,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 8,
+          "green_fodder": 2,
+          "dry_roughage": 4.5
+        }
+      }
+    },
+    {
+      "milk_yield": 12.5,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 3.6,
+          "green_fodder": 35,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 5.5,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 8.8,
+          "green_fodder": 2,
+          "dry_roughage": 4.5
+        }
+      }
+    },
+    {
+      "milk_yield": 15,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 4.8,
+          "green_fodder": 35,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 6.7,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 9.8,
+          "green_fodder": 2,
+          "dry_roughage": 4.5
+        }
+      }
+    },
+    {
+      "milk_yield": 20,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 7,
+          "green_fodder": 38,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 9.3,
+          "green_fodder": 20,
+          "dry_roughage": 3
+        },
+        "low": {
+          "concentrate": 12,
+          "green_fodder": 2,
+          "dry_roughage": 5
+        }
+      }
+    }
+  ],
+  "1": [
+    {
+      "milk_yield": 3,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 1.6,
+          "green_fodder": 30,
+          "dry_roughage": 3
+        },
+        "moderate": {
+          "concentrate": 2.5,
+          "green_fodder": 15,
+          "dry_roughage": 6
+        },
+        "low": {
+          "concentrate": 3.2,
+          "green_fodder": 5,
+          "dry_roughage": 7
+        }
+      }
+    },
+    {
+      "milk_yield": 6,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 3.7,
+          "green_fodder": 30,
+          "dry_roughage": 3
+        },
+        "moderate": {
+          "concentrate": 4.5,
+          "green_fodder": 15,
+          "dry_roughage": 6
+        },
+        "low": {
+          "concentrate": 5.25,
+          "green_fodder": 5,
+          "dry_roughage": 7
+        }
+      }
+    },
+    {
+      "milk_yield": 9,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 5.6,
+          "green_fodder": 30,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 6.5,
+          "green_fodder": 15,
+          "dry_roughage": 6.5
+        },
+        "low": {
+          "concentrate": 7.4,
+          "green_fodder": 5,
+          "dry_roughage": 7
+        }
+      }
+    },
+    {
+      "milk_yield": 12,
+      "green_fodder_availability": {
+        "high": {
+          "concentrate": 5.6,
+          "green_fodder": 30,
+          "dry_roughage": 3.5
+        },
+        "moderate": {
+          "concentrate": 6.5,
+          "green_fodder": 15,
+          "dry_roughage": 6.5
+        },
+        "low": {
+          "concentrate": 7.4,
+          "green_fodder": 5,
+          "dry_roughage": 7
+        }
+      }
+    }
+  ]
+}
