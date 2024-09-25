@@ -1,16 +1,17 @@
-package com.jery.feedchart.util
+package com.jery.feedchart.util.composables
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.jery.feedchart.util.LocaleUtils
 
 @Composable
 fun BottomLanguageBar() {
@@ -20,7 +21,8 @@ fun BottomLanguageBar() {
 
     LazyRow(
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth()
     ) {
         items(languages) { language ->
             val (langName, langCode) = language.split(":")
@@ -34,7 +36,7 @@ fun BottomLanguageBar() {
             ) {
                 Text(text = langName)
             }
-            Text(text = "|")
+            if(langName != languages.last().split(":").first()) Text(text = "|")
         }
     }
 }

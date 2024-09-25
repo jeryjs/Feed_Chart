@@ -3,28 +3,18 @@ package com.jery.feedchart.data.model
 import com.google.gson.annotations.SerializedName
 
 data class FeedRecommendation(
+    @SerializedName("type")
+    val displayType: Int,
+
     @SerializedName("milk_yield")
     val milkYield: Float?,
+
     @SerializedName("body_weight")
-    val bodyWeight: Float?,
+    val bodyWeight: Int?,
+
     @SerializedName("green_fodder_availability")
     val greenFodderAvailability: Map<FodderAvailability, FeedDetails>?,
+
     @SerializedName("expected_daily_gain")
-    val expectedDailyGain: ExpectedDailyGain? // New for sheep
+    val expectedDailyGain: ExpectedDailyGain?,
 )
-
-data class ExpectedDailyGain(
-    @SerializedName("semi_intensive_system")
-    val semiIntensiveSystem: Map<Int, Int>,
-    @SerializedName("intensive_system")
-    val intensiveSystem: Map<Int, Int>
-)
-
-enum class FodderAvailability {
-    @SerializedName("high")
-    HIGH,
-    @SerializedName("moderate")
-    MODERATE,
-    @SerializedName("low")
-    LOW
-}

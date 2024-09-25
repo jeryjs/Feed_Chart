@@ -1,4 +1,4 @@
-package com.jery.feedchart.ui.main
+package com.jery.feedchart.ui.home
 
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.CardColors
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
@@ -30,17 +30,12 @@ import com.jery.feedchart.R
 
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
-@Preview
-fun AnimalItem(
-    name: String = "Cow",
-    description: String = "A domestic animal",
-    iconRes: Int = R.drawable.ic_animal_cow,
-    onClick: () -> Unit = {}
-) {
+fun AnimalItem(name: String, description: String, iconRes: Int , onClick: () -> Unit) {
     ElevatedCard(
         colors = CardDefaults.cardColors().copy(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
         ),
+        shape = RoundedCornerShape(24.dp),
         elevation = CardDefaults.elevatedCardElevation(),
         modifier = Modifier
             .fillMaxWidth()
@@ -75,4 +70,15 @@ fun AnimalItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun AnimalItemPreview() {
+    AnimalItem(
+        name = "Cow",
+        description = "A domestic animal",
+        iconRes = R.drawable.ic_animal_cow,
+        onClick = {}
+    )
 }

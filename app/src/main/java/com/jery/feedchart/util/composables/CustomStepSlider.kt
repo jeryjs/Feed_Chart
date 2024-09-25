@@ -1,6 +1,7 @@
-package com.jery.feedchart.ui.details
+package com.jery.feedchart.util.composables
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -28,27 +29,19 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CustomStepSlider(
     modifier: Modifier = Modifier,
-    values: List<Any>,
-    selectedValue: Any,
-    onValueSelected: (Any) -> Unit,
-    label: String,
+    values: List<String>,
+    selectedValue: String,
+    onValueSelected: (String) -> Unit,
 ) {
     // Convert values into a step index for slider control
     val stepCount = values.size - 1
-    val currentStep = values.indexOf(selectedValue).coerceIn(0, stepCount)
+    val currentStep = values.indexOf(selectedValue)
     val sliderPosition = remember { mutableStateOf(currentStep.toFloat()) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.fillMaxWidth()
     ) {
-        // Label for the Slider
-        Text(
-            text = label,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.primary,
-        )
         // Custom Slider with Steps
         Box(
             contentAlignment = Alignment.Center,
@@ -65,7 +58,6 @@ fun CustomStepSlider(
                     shape = RoundedCornerShape(24.dp)
                 )
         ) {
-            // Slider
             Slider(
                 value = sliderPosition.value,
                 valueRange = 0f..stepCount.toFloat(),
@@ -88,32 +80,32 @@ fun CustomStepSlider(
                 thumb = {
                     Box(
                         modifier = Modifier
-                            .size(50.dp)
+                            .size(60.dp)
                             .clip(CircleShape)
-                            .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape)
+                            .border(3.dp, MaterialTheme.colorScheme.surface, CircleShape)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), CircleShape)
                     )
                 }
             )
-            // Item Text Over Slider
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().fillMaxHeight()
             ) {
                 values.forEach { value ->
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(50.dp)    // Same size as thumb to ensure the text is aligned inside it.
+                            .size(58.dp)    // Same size as thumb to ensure the text is aligned inside it.
                             .clip(CircleShape)
                     ) {
                         Text(
                             text = value.toString(),
-                            fontSize = 16.sp,
+                            fontSize = if (value == selectedValue) 20.sp else 16.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
-                            color = if (value == selectedValue) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(top = 4.dp)
+                            color = if (value == selectedValue) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceBright,
+                            modifier = Modifier.animateContentSize()
                         )
                     }
                 }
@@ -123,19 +115,18 @@ fun CustomStepSlider(
 }
 
 class SampleValuesProvider : PreviewParameterProvider<List<Any>> {
-    override val values: Sequence<List<Any>> = sequenceOf(listOf(5.0, 7.5, 10.0, 12.5, 15.0, 20.0))
+    override val values: Sequence<List<Any>> = sequenceOf(listOf("5.0", "7.5", "10.0", "12.5", "15.0", "20.0"))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun PreviewCustomStepSlider(
-    @PreviewParameter(SampleValuesProvider::class) values: List<Any>,
+    @PreviewParameter(SampleValuesProvider::class) values: List<String>,
 ) {
     CustomStepSlider(
         values = values,
         selectedValue = values[3],
         onValueSelected = {},
-        label = "Sample Label"
     )
 }
