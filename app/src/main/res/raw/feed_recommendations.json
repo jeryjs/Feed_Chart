@@ -1,6 +1,7 @@
 {
   "0": [
     {
+      "type": 0,
       "milk_yield": 5,
       "green_fodder_availability": {
         "high": {
@@ -21,6 +22,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 7.5,
       "green_fodder_availability": {
         "high": {
@@ -41,6 +43,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 10,
       "green_fodder_availability": {
         "high": {
@@ -61,6 +64,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 12.5,
       "green_fodder_availability": {
         "high": {
@@ -81,6 +85,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 15,
       "green_fodder_availability": {
         "high": {
@@ -101,6 +106,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 20,
       "green_fodder_availability": {
         "high": {
@@ -123,6 +129,7 @@
   ],
   "1": [
     {
+      "type": 0,
       "milk_yield": 3,
       "green_fodder_availability": {
         "high": {
@@ -143,6 +150,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 6,
       "green_fodder_availability": {
         "high": {
@@ -163,6 +171,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 9,
       "green_fodder_availability": {
         "high": {
@@ -183,6 +192,7 @@
       }
     },
     {
+      "type": 0,
       "milk_yield": 12,
       "green_fodder_availability": {
         "high": {
@@ -199,6 +209,116 @@
           "concentrate": 7.4,
           "green_fodder": 5,
           "dry_roughage": 7
+        }
+      }
+    }
+  ],
+  "2": [
+    {
+      "type": 1,
+      "body_weight": 15,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 350,
+          "100": 370,
+          "150": 420,
+          "200": 460
+        },
+        "intensive_system": {
+          "75": 410,
+          "100": 430,
+          "150": 490,
+          "200": 540
+        }
+      }
+    },
+    {
+      "type": 1,
+      "body_weight": 20,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 420,
+          "100": 450,
+          "150": 510,
+          "200": 570
+        },
+        "intensive_system": {
+          "75": 490,
+          "100": 520,
+          "150": 600,
+          "200": 670
+        }
+      }
+    },
+    {
+      "type": 1,
+      "body_weight": 25,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 480,
+          "100": 510,
+          "150": 570,
+          "200": 630
+        },
+        "intensive_system": {
+          "75": 560,
+          "100": 600,
+          "150": 670,
+          "200": 740
+        }
+      }
+    },
+    {
+      "type": 1,
+      "body_weight": 30,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 540,
+          "100": 570,
+          "150": 630,
+          "200": 690
+        },
+        "intensive_system": {
+          "75": 630,
+          "100": 660,
+          "150": 730,
+          "200": 810
+        }
+      }
+    },
+    {
+      "type": 1,
+      "body_weight": 40,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 650,
+          "100": 680,
+          "150": 740,
+          "200": 800
+        },
+        "intensive_system": {
+          "75": 750,
+          "100": 790,
+          "150": 860,
+          "200": 930
+        }
+      }
+    },
+    {
+      "type": 1,
+      "body_weight": 50,
+      "expected_daily_gain": {
+        "semi_intensive_system": {
+          "75": 750,
+          "100": 780,
+          "150": 840,
+          "200": 900
+        },
+        "intensive_system": {
+          "75": 880,
+          "100": 910,
+          "150": 980,
+          "200": 1050
         }
       }
     }

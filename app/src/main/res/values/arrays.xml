@@ -12,4 +12,9 @@
         <item>@drawable/ic_animal_cow</item>
         <item>@drawable/ic_animal_buffalo</item>
     </array>
+
+    <string-array name="languages">
+        <item>English:en</item>
+        <item>Kannada:ka</item>
+    </string-array>
 </resources>
