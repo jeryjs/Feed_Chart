@@ -15,11 +15,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,10 +35,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jery.feedchart.R
 import com.jery.feedchart.data.model.ExpectedDailyGain
 import com.jery.feedchart.data.model.FeedRecommendation
@@ -71,8 +74,8 @@ fun BodyWeightScreen(feedRecommendations: List<FeedRecommendation>) {
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
             .padding(16.dp)
-//            .verticalScroll(rememberScrollState())
-            .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
+//            .fillMaxHeight()
     ) {
         BodyWeightSelector(
             recommendations = feedRecommendations,
@@ -188,12 +191,9 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
                 spacing = 4.dp,
                 thickness = 32.dp
             ),
-            labelProperties = LabelProperties(
-                enabled = true,
-                textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End),
-            ),
+            labelProperties = LabelProperties(enabled = true, textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End)),
             indicatorProperties = VerticalIndicatorProperties(enabled = false),
-            labelHelperProperties = LabelHelperProperties(textStyle = MaterialTheme.typography.bodyMedium),
+            labelHelperProperties = LabelHelperProperties(textStyle = TextStyle.Default.copy(fontSize = 14.sp)),
             dividerProperties = DividerProperties(enabled = false),
             gridProperties = GridProperties(enabled = false),
             animationMode = AnimationMode.Together(delayBuilder = { index -> (index * 10).toLong() }),
@@ -220,11 +220,10 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 90.dp)
+            .padding(top = 80.dp)
             .animateContentSize()
     ) {
         expectedDailyGain.intensiveSystem.keys.forEach { key ->
@@ -232,7 +231,7 @@ fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 19.dp, start = 64.dp)
+                    .padding(bottom = 21.dp, start = 64.dp)
             ) {
                 AnimatedContent(
                     targetState = expectedDailyGain,
@@ -249,7 +248,7 @@ fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 27.dp, start = 64.dp)
+                    .padding(bottom = 30.dp, start = 64.dp)
             ) {
                 AnimatedContent(
                     targetState = expectedDailyGain,

@@ -196,17 +196,17 @@
       "milk_yield": 12,
       "green_fodder_availability": {
         "high": {
-          "concentrate": 5.6,
+          "concentrate": 7.6,
           "green_fodder": 30,
-          "dry_roughage": 3.5
+          "dry_roughage": 4
         },
         "moderate": {
-          "concentrate": 6.5,
+          "concentrate": 8.5,
           "green_fodder": 15,
-          "dry_roughage": 6.5
+          "dry_roughage": 7
         },
         "low": {
-          "concentrate": 7.4,
+          "concentrate": 9.4,
           "green_fodder": 5,
           "dry_roughage": 7
         }

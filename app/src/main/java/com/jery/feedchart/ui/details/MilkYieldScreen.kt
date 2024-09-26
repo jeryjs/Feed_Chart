@@ -1,6 +1,8 @@
 package com.jery.feedchart.ui.details
 
 import android.content.Context
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -158,19 +159,20 @@ fun FodderAvailabilitySelector(
 
 @Composable
 fun RadioGroup(selectedOption: FodderAvailability, onOptionSelected: (FodderAvailability) -> Unit) {
+    val density = LocalContext.current.resources.displayMetrics.density
     Row {
         FodderAvailability.entries.forEach { option ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .clickable { onOptionSelected(option) }
-                    .padding(8.dp)
+                    .padding((2 * density).dp)
             ) {
                 RadioButton(
                     selected = option == selectedOption,
                     onClick = { onOptionSelected(option) }
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width((2 * density).dp))
                 Text(
                     text = option.name,
                     color = when (option) {
@@ -183,7 +185,6 @@ fun RadioGroup(selectedOption: FodderAvailability, onOptionSelected: (FodderAvai
         }
     }
 }
-
 @Composable
 private fun FeedRecommendationDisplay(
     milkYield: Float?,
@@ -214,6 +215,7 @@ private fun FeedRecommendationDisplay(
     }
 }
 
+@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun RecommendationChart(recommendation: FeedDetails?) {
     recommendation?.let {
@@ -223,7 +225,7 @@ fun RecommendationChart(recommendation: FeedDetails?) {
             stringResource(R.string.dry_roughage), it.dryRoughage, MaterialTheme.colorScheme.tertiaryContainer,
         )
 
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
@@ -234,16 +236,14 @@ fun RecommendationChart(recommendation: FeedDetails?) {
                         )
                     ),
                     shape = RoundedCornerShape(24.dp)
-                ),
+                )
+                .animateContentSize(),
         ) {
             CustomPieChart(
                 pieData = pieData,
                 showLabelsInArcs = true,
                 valueLabelFormatter = { "%.2f Kg".format(it) },
-                modifier = Modifier
-                    .size(400.dp)
-                    .padding(16.dp)
-                    .padding(bottom = 32.dp)
+                modifier = Modifier.padding(8.dp)
             )
         }
     }
