@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -96,7 +98,7 @@ fun MyAppBar(animalId: Int = 0) {
             actions = {
                 IconButton(onClick = { showExtendedMenu = !showExtendedMenu }) {
                     Icon(
-                        painter = rememberAnimatedVectorPainter(AnimatedImageVector.animatedVectorResource(R.drawable.anim_caret_down), !showExtendedMenu),
+                        imageVector = Icons.Default.MoreVert,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary
                     )

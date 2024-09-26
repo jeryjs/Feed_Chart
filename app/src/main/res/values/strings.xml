@@ -19,10 +19,13 @@
     <string name="read_more">Read More…</string>
 
     <string name="semi_intensive_system">Semi Intensive System</string>
+    <string name="semi_intensive">Semi Intensive</string>
     <string name="intensive_system">Intensive System</string>
-    <string name="body_weight_kg">Body Weight (kg)</string>
-    <string name="expected_daily_gain_kg_day">Expected Daily Gain (Kg/day)</string>
+    <string name="intensive">Intensive</string>
+
     <string name="milk_yield_lit_day">Milk Yield (lit/day)</string>
     <string name="green_fodder_availability">Green Fodder Availability</string>
     <string name="feed_recommendation_per_day">Feed Recommendation (per day)</string>
+    <string name="body_weight_kg">Body Weight (kg)</string>
+    <string name="expected_daily_gain_kg_day">Expected Daily Gain (Kg/day)</string>
 </resources>
