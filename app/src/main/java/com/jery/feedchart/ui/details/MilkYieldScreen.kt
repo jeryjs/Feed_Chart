@@ -1,15 +1,23 @@
 package com.jery.feedchart.ui.details
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -20,38 +28,73 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.jery.feedchart.R
 import com.jery.feedchart.data.model.FeedDetails
 import com.jery.feedchart.data.model.FeedRecommendation
 import com.jery.feedchart.data.model.FodderAvailability
+import com.jery.feedchart.data.repository.FeedRepository
+import com.jery.feedchart.util.composables.CustomPieChart
 import com.jery.feedchart.util.composables.CustomStepSlider
 import kotlin.collections.get
 
 @Composable
 fun MilkYieldScreen(feedRecommendations: List<FeedRecommendation>) {
-    var selectedMilkYield by rememberSaveable { mutableStateOf(feedRecommendations.first().milkYield) }
-    var selectedFodderAvailability by rememberSaveable { mutableStateOf(FodderAvailability.HIGH) }
+    val context = LocalContext.current
+    val feedRecHash = feedRecommendations.hashCode().toString()
+    val sharedPreferences = context.getSharedPreferences("feed_prefs", Context.MODE_PRIVATE)
+    var selectedMilkYield by rememberSaveable {
+        mutableStateOf(
+            sharedPreferences.getFloat(
+                "selected_milk_yield_$feedRecHash",
+                feedRecommendations.last().milkYield!!
+            )
+        )
+    }
+    var selectedFodderAvailability by rememberSaveable {
+        mutableStateOf(
+            sharedPreferences.getString(
+                "selected_fodder_availability_$feedRecHash",
+                FodderAvailability.HIGH.name
+            )?.let { FodderAvailability.valueOf(it) } ?: FodderAvailability.LOW)
+    }
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+            .fillMaxHeight()
     ) {
         MilkYieldSelector(
             recommendations = feedRecommendations,
             selectedMilkYield = selectedMilkYield,
-            onMilkYieldSelected = { selectedMilkYield = it }
+            onMilkYieldSelected = {
+                sharedPreferences.edit().putFloat("selected_milk_yield_$feedRecHash", it!!).apply()
+                selectedMilkYield = it
+            }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         FodderAvailabilitySelector(
             selectedFodderAvailability = selectedFodderAvailability,
-            onFodderAvailabilitySelected = { selectedFodderAvailability = it }
+            onFodderAvailabilitySelected = {
+                sharedPreferences.edit()
+                    .putString("selected_fodder_availability_$feedRecHash", it.name).apply()
+                selectedFodderAvailability = it
+            }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         FeedRecommendationDisplay(
             milkYield = selectedMilkYield,
@@ -73,9 +116,9 @@ private fun MilkYieldSelector(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Milk Yield (lit/day)",
+            text = stringResource(R.string.milk_yield_lit_day),
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -93,26 +136,33 @@ fun FodderAvailabilitySelector(
     selectedFodderAvailability: FodderAvailability,
     onFodderAvailabilitySelected: (FodderAvailability) -> Unit,
 ) {
-    Text(
-        text = "Green Fodder Availability",
-        color = Color(0xFFB22222), // Red color
-        fontWeight = FontWeight.Bold
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = stringResource(R.string.green_fodder_availability),
+            fontWeight = FontWeight.Bold,
+            fontSize = 22.sp,
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
 
-    RadioGroup(
-        selectedOption = selectedFodderAvailability,
-        onOptionSelected = { onFodderAvailabilitySelected(it) }
-    )
+        RadioGroup(
+            selectedOption = selectedFodderAvailability,
+            onOptionSelected = { onFodderAvailabilitySelected(it) }
+        )
+    }
 }
 
 @Composable
 fun RadioGroup(selectedOption: FodderAvailability, onOptionSelected: (FodderAvailability) -> Unit) {
-    Column {
+    Row {
         FodderAvailability.entries.forEach { option ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .clickable { onOptionSelected(option) }
                     .padding(8.dp)
             ) {
@@ -145,42 +195,67 @@ private fun FeedRecommendationDisplay(
             selectedFodderAvailability
         )
 
-    RecommendationChart(recommendation)
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(intrinsicSize = IntrinsicSize.Min)
+    ) {
+        Text(
+            text = stringResource(R.string.feed_recommendation_per_day),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 22.sp,
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        RecommendationChart(recommendation)
+    }
 }
 
 @Composable
 fun RecommendationChart(recommendation: FeedDetails?) {
     recommendation?.let {
-        Column {
-            Text(
-                text = "Concentrate : ${it.concentrateString} Kg",
-                color = Color(0xFF0000FF), // Blue color
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
+        var pieData = listOf(
+            stringResource(R.string.concentrate), it.concentrate, MaterialTheme.colorScheme.primaryContainer,
+            stringResource(R.string.green_fodder), it.greenFodder, MaterialTheme.colorScheme.inversePrimary,
+            stringResource(R.string.dry_roughage), it.dryRoughage, MaterialTheme.colorScheme.tertiaryContainer,
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                        )
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                ),
+        ) {
+            CustomPieChart(
+                pieData = pieData,
+                showLabelsInArcs = true,
+                valueLabelFormatter = { "%.2f Kg".format(it) },
                 modifier = Modifier
-                    .background(Color(0xFFD3D3D3), RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Green Fodder : ${it.greenFodderString} Kg",
-                color = Color(0xFF008000), // Green color
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .background(Color(0xFFD3D3D3), RoundedCornerShape(8.dp))
-                    .padding(8.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Dry Roughage : ${it.dryRoughageString} Kg",
-                color = Color(0xFF4B0082), // Indigo color
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .background(Color(0xFFD3D3D3), RoundedCornerShape(8.dp))
-                    .padding(8.dp)
+                    .size(400.dp)
+                    .padding(16.dp)
+                    .padding(bottom = 32.dp)
             )
         }
+    }
+}
+
+
+@Preview
+@Composable
+fun PreviewMilkYieldScreen() {
+    Box(
+        modifier = Modifier.background(Color.White)
+    ) {
+        MilkYieldScreen(feedRecommendations = FeedRepository(LocalContext.current).getRecommendations().entries.first().value)
     }
 }

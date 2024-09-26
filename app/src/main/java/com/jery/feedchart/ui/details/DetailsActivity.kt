@@ -97,7 +97,7 @@ fun MyAppBar(animalId: Int = 0) {
                 IconButton(onClick = { showExtendedMenu = !showExtendedMenu }) {
                     Icon(
                         painter = rememberAnimatedVectorPainter(AnimatedImageVector.animatedVectorResource(R.drawable.anim_caret_down), !showExtendedMenu),
-                        contentDescription = "Extended Options",
+                        contentDescription = null,
                         tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
