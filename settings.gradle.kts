@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Feed Chart"
 include(":app")
+ 

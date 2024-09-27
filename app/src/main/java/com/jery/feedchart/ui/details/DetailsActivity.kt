@@ -1,88 +1,330 @@
 package com.jery.feedchart.ui.details
 
-import android.R
+import android.app.Activity
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import androidx.appcompat.app.AppCompatActivity
-import com.jery.feedchart.data.model.FeedDetails
-import com.jery.feedchart.data.model.FeedRecommendation
-import com.jery.feedchart.data.model.FodderAvailability
+import android.os.Environment
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.ArrowForward
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.FileProvider
+import com.jery.feedchart.R
 import com.jery.feedchart.data.repository.FeedRepository
-import com.jery.feedchart.databinding.ActivityDetailsBinding
+import com.jery.feedchart.ui.theme.FeedChartTheme
+import com.jery.feedchart.util.composables.BottomLanguageBar
+import kotlinx.coroutines.launch
+import java.io.File
+import java.util.Locale
 
-class DetailsActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityDetailsBinding
-    private lateinit var feedRecommendations: Map<Int, List<FeedRecommendation>>
+class DetailsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        enableEdgeToEdge()
 
         val animalId = intent.getIntExtra("ANIMAL_ID", -1)
-        feedRecommendations = FeedRepository(this).getRecommendations()
+        val feedRecommendations = FeedRepository(this).getRecommendations()[animalId] ?: emptyList()
 
-        setupUI(animalId)
+        setContent {
+            FeedChartTheme {
+                Scaffold(
+                    topBar = { MyAppBar(animalId) },
+                    bottomBar = { BottomLanguageBar() },
+                ) { paddingValues ->
+                    Box(
+                        modifier = Modifier.padding(paddingValues)
+                    ) {
+                        when (feedRecommendations.first().displayType) {
+                            0 -> MilkYieldScreen(feedRecommendations)
+                            1 -> BodyWeightScreen(feedRecommendations)
+                            else -> null
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationGraphicsApi::class)
+@Composable
+fun MyAppBar(animalId: Int = 0) {
+    val activity = LocalContext.current as Activity
+    var showExtendedMenu by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.animateContentSize()) {
+        TopAppBar(
+            title = { Text(text = stringArrayResource(R.array.animal_desc)[animalId]) },
+            navigationIcon = {
+                IconButton(onClick = { activity.finish() }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_back),
+                        contentDescription = "Go Back"
+                    )
+                }
+            },
+            colors = TopAppBarDefaults.mediumTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            actions = {
+                IconButton(onClick = { showExtendedMenu = !showExtendedMenu }) {
+                    Image(
+                        painter = rememberAnimatedVectorPainter(AnimatedImageVector.animatedVectorResource(R.drawable.anim_more_enter), showExtendedMenu),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimary),
+                        modifier = Modifier.rotate(90f)
+                    )
+                }
+            }
+        )
+        if (showExtendedMenu)
+            ActionChips()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ActionChips() {
+    var openBottomSheet by rememberSaveable { mutableStateOf(false) }
+    var sheetContent by rememberSaveable { mutableStateOf("") }
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val bottomSheetState = rememberModalBottomSheetState()
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        ActionChip(text = "Details", onClick = {
+            sheetContent = "details"
+            openBottomSheet = true
+        })
+        ActionChip(text = "Request Form", onClick = {
+            sheetContent = "request_form"
+            openBottomSheet = true
+        })
+        ActionChip(text = "Feedback", onClick = {
+            val feedbackIntent = Intent(
+                Intent.ACTION_VIEW,
+//                Uri.parse("market://details?id=" + context.packageName)
+                Uri.parse("market://details?id=" + "com.borne.root.nianp_feedchart")
+            )
+            context.startActivity(feedbackIntent)
+        })
     }
 
-    private fun setupUI(animalId: Int) {
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.milkYieldSpinner.adapter = ArrayAdapter(
-            this, R.layout.simple_spinner_item,
-            feedRecommendations[animalId]?.map { it.milkYield.toString() } ?: emptyList()
-        )
-
-        binding.milkYieldSpinner.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    updateRecommendations(animalId)
+    // Modal Bottom Sheet content
+    if (openBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { openBottomSheet = false },
+            sheetState = bottomSheetState
+        ) {
+            when (sheetContent) {
+                "details" -> {
+                    ReckonerDetailsContent()
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                "request_form" -> {
+                    RequestFormContent(
+                        onDownload = {
+                            val requestForm = downloadRequestFormAsPdf(context as Activity)
+                            requestForm?.let {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    setDataAndType(FileProvider.getUriForFile(context, "${context.packageName}.provider", it), "application/pdf")
+                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                }
+                                context.startActivity(intent)
+                            }
+                        },
+                        onSendMail = {
+                            val intent = Intent(Intent.ACTION_SEND).apply {
+                                type = "application/pdf"
+                                putExtra(Intent.EXTRA_SUBJECT, "Request Form")
+                                putExtra(Intent.EXTRA_TEXT, "Please find the request form attached.")
+                                val inputStream = context.assets.open("request_form.pdf")
+                                val file = File(context.cacheDir, "request_form.pdf")
+                                inputStream.use { input -> file.outputStream().use { output -> input.copyTo(output) } }
+                                val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+                                putExtra(Intent.EXTRA_STREAM, uri)
+                                putExtra(Intent.EXTRA_EMAIL, arrayOf("rajnutri@gmail.com"))
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            }
+                            context.startActivity(Intent.createChooser(intent, "Send email..."))
+                        }
+                    )
+                }
             }
-
-        binding.fodderAvailabilityGroup.setOnCheckedChangeListener { _, _ ->
-            updateRecommendations(animalId)
-        }
-    }
-
-    private fun getRecommendation(
-        animalId: Int,
-        milkYield: Float,
-        fodderAvailability: FodderAvailability
-    ): FeedDetails? {
-        val recommendations = feedRecommendations[animalId] ?: emptyList()
-        return recommendations.find { it.milkYield == milkYield }?.greenFodderAvailability?.get(
-            fodderAvailability
-        )
-    }
-
-    private fun displayRecommendation(recommendation: FeedDetails?) {
-        recommendation?.let {
-            binding.concentrateTextView.text = "Concentrate: ${it.concentrateString} Kg"
-            binding.greenFodderTextView.text = "Green Fodder: ${it.greenFodderString} Kg"
-            binding.dryRoughageTextView.text = "Dry Roughage: ${it.dryRoughageString} Kg"
-        }
-    }
-
-    private fun updateRecommendations(animalId: Int) {
-        val milkYield = binding.milkYieldSpinner.selectedItem?.toString()?.toFloatOrNull() ?: return
-        val fodderAvailability = when (binding.fodderAvailabilityGroup.checkedRadioButtonId) {
-            binding.highGreenRadio.id -> FodderAvailability.HIGH
-            binding.moderateGreenRadio.id -> FodderAvailability.MODERATE
-            binding.lowGreenRadio.id -> FodderAvailability.LOW
-            else -> FodderAvailability.HIGH
         }
 
-        val recommendation = getRecommendation(animalId, milkYield, fodderAvailability)
-        displayRecommendation(recommendation)
+        // Handle Back navigation to close the BottomSheet
+        BackHandler {
+            scope.launch {
+                bottomSheetState.hide()
+            }.invokeOnCompletion {
+                openBottomSheet = false
+            }
+        }
+    }
+}
+
+@Composable
+fun ActionChip(text: String, onClick: () -> Unit) {
+    AssistChip(
+        onClick = onClick,
+        label = {
+            Text(
+                text = text.uppercase(Locale.getDefault()),
+                fontSize = 14.sp
+            )
+        },
+        colors = AssistChipDefaults.assistChipColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            labelColor = Color.White
+        ),
+        modifier = Modifier.padding(4.dp)
+    )
+}
+
+@Composable
+fun ReckonerDetailsContent() {
+    LazyColumn(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        item {
+            Text("Cattle Details", style = MaterialTheme.typography.titleLarge)
+        }
+        item {
+            Text(
+                "Here are the details for different cattle types:",
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+        item {
+            Text("Dairy Cows", style = MaterialTheme.typography.titleMedium)
+            Text("Milk Yield: 15-25 liters per day", style = MaterialTheme.typography.bodySmall)
+            Text(
+                "Feed Type: High protein, moderate carbohydrates",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        item {
+            Text("Buffaloes", style = MaterialTheme.typography.titleMedium)
+            Text("Milk Yield: 10-20 liters per day", style = MaterialTheme.typography.bodySmall)
+            Text(
+                "Feed Type: High fiber, moderate protein",
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+        // Add more detailed items as required.
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RequestFormContent(onDownload: () -> Unit, onSendMail: () -> Unit) {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Request Form", style = MaterialTheme.typography.titleLarge)
+            Row {
+                IconButton(onClick = onSendMail, colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                    Icon(Icons.Default.Email, contentDescription = "Email")
+                }
+                IconButton(onClick = onDownload, colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                    @Suppress("DEPRECATION")
+                    Icon(Icons.Outlined.ArrowForward, contentDescription = null, modifier = Modifier.rotate(90f))
+                }
+            }
+        }
+        LocalContext.current.resources.openRawResource(R.raw.request_form).use { image ->
+            val bitmap = BitmapFactory.decodeStream(image)
+            Card {
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = "Request Form",
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+    }
+}
+
+
+private fun downloadRequestFormAsPdf(context: Activity): File? {
+    try {
+        val inputStream = context.assets.open("request_form.pdf")
+        val downloadsDir = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
+        val outputFile = File(downloadsDir, "request_form.pdf")
+
+        inputStream.use { input ->
+            outputFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        Toast.makeText(context, "${outputFile.name} saved to Downloads", Toast.LENGTH_LONG).show()
+        return outputFile
+    } catch (e: Exception) {
+        Toast.makeText(context, "Failed to download request form: ${e.message}", Toast.LENGTH_LONG).show()
+        return null
     }
 }

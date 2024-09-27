@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Feed Chart</string>
-    <string name="app_title">Ready Reckoner for Feeding of Crossbred Dairy Cow and Milch Buffalo</string>
-    <string name="app_description">We are happy to introduce an android application for formulating ration for crossbred dairy cow and milch buffalo. Balanced ration is formulated based on level of milk production i.e., 5, 7.5, 10, 12.5, 15 and 20 lit/day for a cow weighing 400 kg at different levels of availability of green fodder per day. Similarly for milch buffalo balanced ration is formulated based on level of milk production i.e., 3, 6, 9 and 12 lit/day and weighing 450 kg at different levels of availability of green fodder per day (High, moderate and low). Available in : English I Hindi I Tamil I Kannada I Telugu I Malayalam I Oriya I Marathi. Click cow or buffalo picture</string>
+    <string translatable="false" name="app_name">Feed Chart</string>
+    <string name="app_title">Ready Reckoner for Feeding of Crossbred Dairy Cow, Milch Buffalo &amp; Sheep</string>
+    <string name="app_description">We are happy to introduce an android application for formulating ration for crossbred dairy cow, milch buffalo &amp; Sheep.\nBalanced ration is formulated based on level of milk production i.e., 5, 7.5, 10, 12.5, 15 and 20 lit/day for a cow weighing 400 kg at different levels of availability of green fodder per day.\nSimilarly for milch buffalo balanced ration is formulated based on level of milk production i.e., 3, 6, 9 and 12 lit/day and weighing 450 kg at different levels of availability of green fodder per day (High, moderate and low).</string>
 
     <string name="feed_recommendation">Feed Recommendation (per day)</string>
     <string name="concentrate">Concentrate</string>
@@ -15,4 +15,17 @@
     <string name="high_green">High Green</string>
     <string name="moderate_green">Moderate Green</string>
     <string name="low_green">Low Green</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">Read More…</string>
+
+    <string name="semi_intensive_system">Semi Intensive System</string>
+    <string name="semi_intensive">Semi Intensive</string>
+    <string name="intensive_system">Intensive System</string>
+    <string name="intensive">Intensive</string>
+
+    <string name="milk_yield_lit_day">Milk Yield (lit/day)</string>
+    <string name="green_fodder_availability">Green Fodder Availability</string>
+    <string name="feed_recommendation_per_day">Feed Recommendation (per day)</string>
+    <string name="body_weight_kg">Body Weight (kg)</string>
+    <string name="expected_daily_gain_kg_day">Expected Daily Gain (Kg/day)</string>
 </resources>

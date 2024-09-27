@@ -19,3 +19,12 @@ data class FeedDetails(
     val greenFodderString get() = greenFodder.toIntIfNoDecimals()
     val dryRoughageString get() = dryRoughage.toIntIfNoDecimals()
 }
+
+enum class FodderAvailability {
+    @SerializedName("high")
+    HIGH,
+    @SerializedName("moderate")
+    MODERATE,
+    @SerializedName("low")
+    LOW
+}
