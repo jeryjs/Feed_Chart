@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="Feed_Chart.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-09-27T09:03:23.058366800Z">
+        <DropdownSelection timestamp="2024-09-27T11:12:39.907398100Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Default" identifier="serial=emulator-5554;connection=ed9bc4dc" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Jery\.android\avd\Medium_Phone.avd" />
             </handle>
           </Target>
         </DropdownSelection>

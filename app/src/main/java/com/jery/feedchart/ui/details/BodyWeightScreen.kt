@@ -238,7 +238,7 @@ fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
                     transitionSpec = { ContentTransform(scaleIn(transformOrigin = TransformOrigin(0f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)), scaleOut(transformOrigin = TransformOrigin(2f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))) }
                 ) {
                     Text(
-                        text = "${stringResource(R.string.intensive)} - ${it.intensiveSystem[key]}",
+                        text = "${stringResource(R.string.intensive)} - ${it.intensiveSystem[key]} gm",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
                     )
@@ -248,14 +248,14 @@ fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 30.dp, start = 64.dp)
+                    .padding(bottom = 28.dp, start = 64.dp)
             ) {
                 AnimatedContent(
                     targetState = expectedDailyGain,
                     transitionSpec = { ContentTransform(scaleIn(transformOrigin = TransformOrigin(0f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)), scaleOut(transformOrigin = TransformOrigin(2f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))) }
                 ) {
                     Text(
-                        text = "${stringResource(R.string.semi_intensive)} - ${it.semiIntensiveSystem[key]}",
+                        text = "${stringResource(R.string.semi_intensive)} - ${it.semiIntensiveSystem[key]} gm",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.secondary,
                     )

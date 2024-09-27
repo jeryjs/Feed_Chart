@@ -68,7 +68,13 @@ fun CustomPieChart(
     showLabelsInArcs: Boolean = false,
     showValuesBelowChart: Boolean = true,
     customLabelStyle: @Composable (String) -> Unit = { label -> DefaultLabel(label) },
-    customValueStyle: @Composable (String) -> Unit = { value -> DefaultValue(valueLabelFormatter(value.toFloat()).toString()) },
+    customValueStyle: @Composable (String) -> Unit = { value ->
+        DefaultValue(
+            valueLabelFormatter(
+                value.toFloat()
+            ).toString()
+        )
+    },
     rotateOnValueChange: Boolean = false,
 ) {
     val labels = pieData.filterIndexed { index, _ -> index % 3 == 0 } as List<String>
@@ -189,9 +195,16 @@ fun CustomPieChart(
         }
 
         Spacer(modifier = Modifier.height(44.dp))
-        
+
         if (showValuesBelowChart) {
-            var expanded by remember { mutableStateOf(sharedPreferences.getBoolean("expanded_key", false)) }
+            var expanded by remember {
+                mutableStateOf(
+                    sharedPreferences.getBoolean(
+                        "expanded_key",
+                        false
+                    )
+                )
+            }
             val scope = rememberCoroutineScope()
             AnimatedVisibility(
                 visible = expanded,
@@ -219,7 +232,11 @@ fun CustomPieChart(
                     .height(42.dp)
             ) {
                 Icon(
-                    painter = rememberAnimatedVectorPainter(AnimatedImageVector.animatedVectorResource(R.drawable.anim_caret_down), !expanded),
+                    painter = rememberAnimatedVectorPainter(
+                        AnimatedImageVector.animatedVectorResource(
+                            R.drawable.anim_caret_down
+                        ), !expanded
+                    ),
                     contentDescription = null
                 )
             }
@@ -229,8 +246,12 @@ fun CustomPieChart(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun DisplayLabels(labels: List<String>, colors: List<Color>, customLabelStyle: @Composable (String) -> Unit) {
-    FlowRow (
+private fun DisplayLabels(
+    labels: List<String>,
+    colors: List<Color>,
+    customLabelStyle: @Composable (String) -> Unit,
+) {
+    FlowRow(
         modifier = Modifier.fillMaxWidth(),
     ) {
         // Display each item in the pie chart
@@ -266,7 +287,7 @@ fun DisplayValues(
         // Display each item in the pie chart
         labels.forEachIndexed { index, label ->
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(
@@ -274,12 +295,14 @@ fun DisplayValues(
                             .background(color = colors[index], shape = RoundedCornerShape(10.dp))
                             .size(46.dp)
                     )
-                    Column(modifier = Modifier.fillMaxWidth()) {
+                    Row (
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()) {
                         Text(
                             modifier = Modifier.padding(start = 15.dp),
                             text = label,
                             fontWeight = FontWeight.Medium,
-                            fontSize = 16.sp,
+                            fontSize = 18.sp,
                             color = MaterialTheme.colorScheme.primary
                         )
                         customValueStyle(values[index].toString())
@@ -313,7 +336,7 @@ private fun DefaultValue(value: String) {
 
 @Composable
 @Preview
-private  fun DisplayValuesPreview() {
+private fun DisplayValuesPreview() {
     val colors = listOf(Color.Red, Color.Blue, Color.Green)
     Box(
         modifier = Modifier
