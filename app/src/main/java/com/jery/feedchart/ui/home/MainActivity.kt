@@ -11,11 +11,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,7 +35,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -92,7 +89,6 @@ fun HomeScreen(onAnimalClick: (Int) -> Unit = {}) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp)
-                .fillMaxHeight()
         ) {
             AppDescription()
             HorizontalDivider(
@@ -127,17 +123,17 @@ fun MyAppBar() {
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
             scrolledContainerColor = MaterialTheme.colorScheme.primary,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimary
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         title = {
             Image(
                 painter = painterResource(id = R.drawable.icar_nianp_header),
                 contentDescription = null,
-                alignment = AbsoluteAlignment.CenterLeft,
-                modifier = Modifier
-                    .fillMaxWidth()
+                alignment = Alignment.Center,
+                modifier = Modifier.fillMaxWidth().padding(end = 16.dp)
             )
-        }
+        },
+        modifier = Modifier.padding(0.dp)
     )
 }
 
