@@ -63,7 +63,7 @@ jobs:
           changelog="${changelog//$'&'/}"
           changelog="$(echo $changelog | sed -e 's/{{changelogtext}}/<changelogtext>/g')"
           changelog="$(echo $changelog | sed -e 's/{{!changelogtext}}/<\/changelogtext>/g')"
-          changelog="<?xml version=\"1.0\" encoding=\"utf-8\"?><changelog bulletedList=\"true\"><changelogversion versionName=\"${{ github.run_number }}\" changeDate=\"\">$changelog</changelogversion></changelog>"
+          changelog="<?xml version=\"1.0\" encoding=\"utf-8\"?><changelog bulletedList=\"true\"><changelogversion versionName=\"${{ github.event.inputs.version_name }}\" changeDate=\"\">$changelog</changelogversion></changelog>"
           echo "CHANGELOG=$changelog" >> $GITHUB_ENV
 
       - name: Write changelog_debug.xml
@@ -89,15 +89,15 @@ jobs:
         run: |
           set -e
 
-          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-${{ github.run_number }}.apk
-          sha=`sha256sum FeedChart-${{ github.run_number }}.apk | awk '{ print $1 }'`
+          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-v${{ github.event.inputs.version_name }}.apk
+          sha=$(sha256sum FeedChart-v${{ github.event.inputs.version_name }}.apk | awk '{ print $1 }')
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
 
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.run_number }}
-          name: Release Build ${{ github.run_number }}
+          tag_name: v${{ github.event.inputs.version_name }}
+          name: v${{ github.event.inputs.version_name }}
           body: |
             ### Commits
 
@@ -113,7 +113,7 @@ jobs:
             | ------- | ------- |
             | Universal | ${{ env.APK_UNIVERSAL_SHA }} |
           files: |
-            FeedChart-${{ github.run_number }}.apk
+            FeedChart-v${{ github.event.inputs.version_name }}.apk
           draft: false
           prerelease: false
         env:
