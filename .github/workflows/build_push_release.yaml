@@ -90,7 +90,7 @@ jobs:
           set -e
 
           mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-${{ github.run_number }}.apk
-          sha=`sha256sum.apk | awk '{ print $1 }'`
+          sha=`sha256sum FeedChart-${{ github.run_number }}.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
 
       - name: Create release
