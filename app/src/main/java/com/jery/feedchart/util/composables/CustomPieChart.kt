@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
@@ -295,17 +296,32 @@ fun DisplayValues(
                             .background(color = colors[index], shape = RoundedCornerShape(10.dp))
                             .size(46.dp)
                     )
-                    Row (
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxWidth()) {
-                        Text(
-                            modifier = Modifier.padding(start = 15.dp),
-                            text = label,
-                            fontWeight = FontWeight.Medium,
-                            fontSize = 18.sp,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        customValueStyle(values[index].toString())
+                    println(LocalConfiguration.current.fontScale)
+                    if (LocalConfiguration.current.fontScale > 1.1f) {
+                        Column {
+                            Text(
+                                modifier = Modifier.padding(start = 15.dp),
+                                text = label,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            customValueStyle(values[index].toString())
+                        }
+                    } else {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                modifier = Modifier.padding(start = 15.dp),
+                                text = label,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 18.sp,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            customValueStyle(values[index].toString())
+                        }
                     }
                 }
         }

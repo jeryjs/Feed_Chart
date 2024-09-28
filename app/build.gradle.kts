@@ -12,8 +12,8 @@ android {
         applicationId = "com.jery.feedchart"
         minSdk = 24
         targetSdk = 35
-        versionCode = 3
-        versionName = "2.0"
+        versionCode = 4
+        versionName = "2.1"
     }
 
     buildTypes {
@@ -29,9 +29,11 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xcontext-receivers"
     }
     buildFeatures {
         compose = true

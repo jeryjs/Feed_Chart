@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.sp
 import com.jery.feedchart.R
 import com.jery.feedchart.data.model.ExpectedDailyGain
 import com.jery.feedchart.data.model.FeedRecommendation
+import com.jery.feedchart.util.composables.CustomRowChart
 import com.jery.feedchart.util.composables.CustomStepSlider
-import ir.ehsannarmani.compose_charts.RowChart
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars
@@ -134,6 +134,7 @@ private fun ExpectedDailyGainDisplay(
         Text(
             text = stringResource(R.string.expected_daily_gain_kg_day),
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -158,7 +159,8 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
             shape = RoundedCornerShape(24.dp)
         ),
     ) {
-        RowChart(
+        val res = LocalContext.current.resources
+        CustomRowChart(
             data = expectedDailyGain.semiIntensiveSystem.keys.map { key ->
                 Bars(
                     label = key,
@@ -191,9 +193,11 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
                 spacing = 4.dp,
                 thickness = 32.dp
             ),
-            labelProperties = LabelProperties(enabled = true, textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End)),
+            labelProperties = LabelProperties(enabled = true, textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End, color = MaterialTheme.colorScheme.primary)),
+            barOverlayText = { label, value -> "${res.getString(if (label == res.getString(R.string.intensive_system)) R.string.intensive else R.string.semi_intensive)} - $value gm" },
+            barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)),
             indicatorProperties = VerticalIndicatorProperties(enabled = false),
-            labelHelperProperties = LabelHelperProperties(textStyle = TextStyle.Default.copy(fontSize = 14.sp)),
+            labelHelperProperties = LabelHelperProperties(textStyle = TextStyle.Default.copy(fontSize = 14.sp, color = MaterialTheme.colorScheme.primary)),
             dividerProperties = DividerProperties(enabled = false),
             gridProperties = GridProperties(enabled = false),
             animationMode = AnimationMode.Together(delayBuilder = { index -> (index * 10).toLong() }),
@@ -205,7 +209,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
             popupProperties = PopupProperties(
                 enabled = true,
                 duration = 3000,
-                textStyle = MaterialTheme.typography.labelLarge.copy(color = MaterialTheme.colorScheme.onPrimary),
+                textStyle = MaterialTheme.typography.labelLarge.copy(color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)),
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier
@@ -213,7 +217,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
                 .padding(16.dp),
         )
 
-        BarLabelsOverlay(expectedDailyGain)
+//        BarLabelsOverlay(expectedDailyGain)
     }
 }
 
