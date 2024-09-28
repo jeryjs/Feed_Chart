@@ -74,7 +74,7 @@ jobs:
           write-mode: overwrite
 
       - name: Build app
-        run: ./gradlew assembleRelease --stacktrace
+        run: chmod +x ./gradlew && ./gradlew assembleRelease --stacktrace
 
       - name: Sign Android Release
         uses: r0adkll/sign-android-release@v1
