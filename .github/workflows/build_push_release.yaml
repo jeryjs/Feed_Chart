@@ -89,7 +89,7 @@ jobs:
         run: |
           set -e
 
-          mv app/build/outputs/apk/standard/release/app-release-unsigned.apk
+          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-${{ github.run_number }}.apk
           sha=`sha256sum.apk | awk '{ print $1 }'`
           echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
 
@@ -113,7 +113,7 @@ jobs:
             | ------- | ------- |
             | Universal | ${{ env.APK_UNIVERSAL_SHA }} |
           files: |
-            app-release-signed.apk
+            FeedChart-${{ github.run_number }}.apk
           draft: false
           prerelease: false
         env:
