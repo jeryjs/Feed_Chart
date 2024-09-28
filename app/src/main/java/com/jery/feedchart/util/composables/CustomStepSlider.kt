@@ -20,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +40,16 @@ fun CustomStepSlider(
     selectedValue: String,
     onValueSelected: (String) -> Unit,
 ) {
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    val screenHeight = configuration.screenHeightDp.dp
+    val density = LocalDensity.current
+
+    // Scale the size based on screen dimensions
+    val sliderHeight = with(density) { screenHeight * 0.15f }  // Scale height by 15% of screen height
+    val thumbSize = with(density) { screenWidth * 0.17f }       // Thumb size 15% of screen width
+    val fontSizeScalingFactor = with(density) { (screenWidth * 0.015f) } // Font size scaling factor
+
     // Step setup
     val stepCount = values.size - 1
     val currentStep = values.indexOf(selectedValue).coerceIn(0, stepCount)
@@ -64,7 +76,7 @@ fun CustomStepSlider(
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(120.dp)
+                .height(sliderHeight) // Scaled height
                 .background(
                     brush = Brush.horizontalGradient(
                         colors = listOf(
@@ -94,11 +106,11 @@ fun CustomStepSlider(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp),
+                    .height(sliderHeight * 1.25f),
                 thumb = {
                     Box(
                         modifier = Modifier
-                            .size(60.dp)
+                            .size(thumbSize)
                             .clip(CircleShape)
                             .border(3.dp, MaterialTheme.colorScheme.surface, CircleShape)
                             .background(
@@ -120,7 +132,7 @@ fun CustomStepSlider(
                     // Label animations
                     val selected = value == selectedValue
                     val fontSize by animateFloatAsState(
-                        targetValue = if (selected) 22f else 16f,
+                        targetValue = with(density) { if (selected)  fontSizeScalingFactor.toPx() * 1.5f  else  fontSizeScalingFactor.toPx() * 1.0f },
                         animationSpec = tween(durationMillis = 500)
                     )
                     val labelColor by animateColorAsState(
@@ -131,7 +143,7 @@ fun CustomStepSlider(
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
-                            .size(58.dp)    // Same size as thumb to ensure the text is aligned inside it.
+                            .size(screenWidth * 0.15f)
                             .clip(CircleShape)
                             .animateContentSize()
                     ) {
@@ -141,6 +153,7 @@ fun CustomStepSlider(
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
                             color = labelColor,
+                            maxLines = 1,
                             modifier = Modifier.animateContentSize()
                         )
                     }
@@ -149,6 +162,7 @@ fun CustomStepSlider(
         }
     }
 }
+
 
 
 class SampleValuesProvider : PreviewParameterProvider<List<Any>> {
