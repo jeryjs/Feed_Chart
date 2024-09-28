@@ -2,6 +2,7 @@ package com.jery.feedchart.ui.details
 
 import android.content.Context
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -160,31 +161,42 @@ fun FodderAvailabilitySelector(
 @Composable
 fun RadioGroup(selectedOption: FodderAvailability, onOptionSelected: (FodderAvailability) -> Unit) {
     val density = LocalContext.current.resources.displayMetrics.density
+    val screenWidth = LocalConfiguration.current.screenWidthDp * density/4
+
+    // Adaptive font scaling factor based on both width and height
+    val fontScalingFactor = (screenWidth * 0.07f)
+    val selectedFontSize by animateFloatAsState(targetValue = fontScalingFactor)
+    val unselectedFontSize = selectedFontSize * 0.7f
+
     Row {
         FodderAvailability.entries.forEach { option ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .clickable { onOptionSelected(option) }
-                    .padding((2 * density).dp)
+                    .animateContentSize()
             ) {
                 RadioButton(
                     selected = option == selectedOption,
                     onClick = { onOptionSelected(option) }
                 )
-                Spacer(modifier = Modifier.width((2 * density).dp))
                 Text(
                     text = option.name,
+                    fontSize = with(density) { if (option == selectedOption) selectedFontSize.sp else unselectedFontSize.sp },
+                    style = MaterialTheme.typography.labelSmall,
                     color = when (option) {
                         FodderAvailability.HIGH -> Color(0xFFFF0000) // High: Red
                         FodderAvailability.MODERATE -> Color(0xFF008000) // Moderate: Green
-                        FodderAvailability.LOW -> Color(0xFF708090) // Low: Grey
-                    }
+                        FodderAvailability.LOW -> Color(0xFF5F89B4) // Low: Grey
+                    }.copy(alpha = if (option == selectedOption) 1f else 0.6f),
+                    maxLines = 1,
+                    modifier = Modifier.animateContentSize()
                 )
             }
         }
     }
 }
+
 @Composable
 private fun FeedRecommendationDisplay(
     milkYield: Float?,

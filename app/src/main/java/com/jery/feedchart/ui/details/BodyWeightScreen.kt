@@ -134,6 +134,7 @@ private fun ExpectedDailyGainDisplay(
         Text(
             text = stringResource(R.string.expected_daily_gain_kg_day),
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
         )
@@ -194,7 +195,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
             ),
             labelProperties = LabelProperties(enabled = true, textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End, color = MaterialTheme.colorScheme.primary)),
             barOverlayText = { label, value -> "${res.getString(if (label == res.getString(R.string.intensive_system)) R.string.intensive else R.string.semi_intensive)} - $value gm" },
-            barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp),
+            barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)),
             indicatorProperties = VerticalIndicatorProperties(enabled = false),
             labelHelperProperties = LabelHelperProperties(textStyle = TextStyle.Default.copy(fontSize = 14.sp, color = MaterialTheme.colorScheme.primary)),
             dividerProperties = DividerProperties(enabled = false),
