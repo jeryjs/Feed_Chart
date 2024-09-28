@@ -1,6 +1,7 @@
 package com.jery.feedchart.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -51,7 +52,7 @@ private  val typography = Typography.copy(
 
 @Composable
 fun FeedChartTheme(
-    darkTheme: Boolean = false,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
