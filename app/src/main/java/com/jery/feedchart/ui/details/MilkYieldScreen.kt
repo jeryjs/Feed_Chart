@@ -232,9 +232,9 @@ private fun FeedRecommendationDisplay(
 fun RecommendationChart(recommendation: FeedDetails?) {
     recommendation?.let {
         var pieData = listOf(
-            stringResource(R.string.concentrate), it.concentrate, MaterialTheme.colorScheme.primaryContainer,
-            stringResource(R.string.green_fodder), it.greenFodder, MaterialTheme.colorScheme.inversePrimary,
-            stringResource(R.string.dry_roughage), it.dryRoughage, MaterialTheme.colorScheme.tertiaryContainer,
+            stringResource(R.string.concentrate), it.concentrate, Color(0xFFFFEB3B).copy(alpha = 0.6f),
+            stringResource(R.string.green_fodder), it.greenFodder, Color(0xFF4CAF50).copy(alpha = 0.6f),
+            stringResource(R.string.dry_roughage), it.dryRoughage, Color(0xFF8D6E63).copy(alpha = 0.6f),
         )
 
         Column(
