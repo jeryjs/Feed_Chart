@@ -1,15 +1,13 @@
 package com.jery.feedchart.ui.details
 
 import android.content.Context
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,10 +31,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,6 +67,11 @@ fun BodyWeightScreen(feedRecommendations: List<FeedRecommendation>) {
             )
         )
     }
+    var selectedSystemType by rememberSaveable {
+        mutableStateOf(
+            sharedPreferences.getInt("selected_system_type_$feedRecHash", 0)
+        )
+    }
 
     Column(
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -85,11 +88,20 @@ fun BodyWeightScreen(feedRecommendations: List<FeedRecommendation>) {
                 selectedBodyWeight = it
             }
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(64.dp))
         ExpectedDailyGainDisplay(
             bodyWeight = selectedBodyWeight,
-            feedRecommendations = feedRecommendations
+            feedRecommendations = feedRecommendations,
+            selectedSystemType = selectedSystemType
         )
+        Spacer(modifier = Modifier.height(12.dp))
+        SystemTypeSelector(
+            options = listOf(stringResource(R.string.intensive_system), stringResource(R.string.semi_intensive_system)),
+            selectedOption = selectedSystemType,
+        ) {
+            sharedPreferences.edit().putInt("selected_system_type_$feedRecHash", it).apply()
+            selectedSystemType = it
+        }
     }
 }
 
@@ -124,6 +136,7 @@ private fun BodyWeightSelector(
 private fun ExpectedDailyGainDisplay(
     bodyWeight: Int?,
     feedRecommendations: List<FeedRecommendation>,
+    selectedSystemType: Int
 ) {
     val recommendation = feedRecommendations.find { it.bodyWeight == bodyWeight }?.expectedDailyGain
 
@@ -139,13 +152,13 @@ private fun ExpectedDailyGainDisplay(
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(modifier = Modifier.height(12.dp))
-        RecommendationChart(recommendation!!)
+        RecommendationChart(recommendation!!, selectedSystemType)
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
+fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType: Int) {
     val size = expectedDailyGain.semiIntensiveSystem.values.count()
 
     Box(
@@ -166,25 +179,15 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
                     label = key,
                     values = listOf(
                         Bars.Data(
-                            label = stringResource(R.string.intensive_system),
-                            value = expectedDailyGain.intensiveSystem[key]!!.toDouble(),
-                            color = Brush.horizontalGradient(
-                                listOf(
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.primaryContainer
-                                )
-                            )
-                        ),
-                        Bars.Data(
-                            label = stringResource(R.string.semi_intensive_system),
-                            value = expectedDailyGain.semiIntensiveSystem[key]!!.toDouble(),
+                            label = stringResource(if (selectedSystemType == 0) R.string.intensive_system else R.string.semi_intensive_system),
+                            value = (if (selectedSystemType == 0) expectedDailyGain.intensiveSystem[key] else expectedDailyGain.semiIntensiveSystem[key])!!.toDouble(),
                             color = Brush.horizontalGradient(
                                 listOf(
                                     MaterialTheme.colorScheme.inversePrimary,
                                     MaterialTheme.colorScheme.secondaryContainer
                                 )
                             )
-                        ),
+                        )
                     ),
                 )
             },
@@ -197,7 +200,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
             barOverlayText = { label, value -> "${res.getString(if (label == res.getString(R.string.intensive_system)) R.string.intensive else R.string.semi_intensive)} - $value gm" },
             barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)),
             indicatorProperties = VerticalIndicatorProperties(enabled = false),
-            labelHelperProperties = LabelHelperProperties(textStyle = TextStyle.Default.copy(fontSize = 14.sp, color = MaterialTheme.colorScheme.primary)),
+            labelHelperProperties = LabelHelperProperties(enabled = false),
             dividerProperties = DividerProperties(enabled = false),
             gridProperties = GridProperties(enabled = false),
             animationMode = AnimationMode.Together(delayBuilder = { index -> (index * 10).toLong() }),
@@ -213,57 +216,42 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain) {
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier
-                .height((size * 80 + 100).dp)
+                .height((size * 60).dp)
                 .padding(16.dp),
         )
-
-//        BarLabelsOverlay(expectedDailyGain)
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun BarLabelsOverlay(expectedDailyGain: ExpectedDailyGain) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 80.dp)
-            .animateContentSize()
+fun SystemTypeSelector(options: List<String>, selectedOption: Int, onOptionSelected: (Int) -> Unit) {
+    val density = LocalContext.current.resources.displayMetrics.density
+    val screenWidth = LocalConfiguration.current.screenWidthDp * density/4
+    // Adaptive font scaling factor based on both width and height
+    val fontScalingFactor = (screenWidth * 0.06f)
+    val selectedFontSize by animateFloatAsState(targetValue = fontScalingFactor)
+    val unselectedFontSize = selectedFontSize * 0.7f
+
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        expectedDailyGain.intensiveSystem.keys.forEach { key ->
+        options.forEach { option ->
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 21.dp, start = 64.dp)
+                    .clickable(onClick = { onOptionSelected(options.indexOf(option)) })
+                    .animateContentSize(),
             ) {
-                AnimatedContent(
-                    targetState = expectedDailyGain,
-                    transitionSpec = { ContentTransform(scaleIn(transformOrigin = TransformOrigin(0f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)), scaleOut(transformOrigin = TransformOrigin(2f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))) }
-                ) {
-                    Text(
-                        text = "${stringResource(R.string.intensive)} - ${it.intensiveSystem[key]} gm",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f),
-                    )
-                }
-            }
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 28.dp, start = 64.dp)
-            ) {
-                AnimatedContent(
-                    targetState = expectedDailyGain,
-                    transitionSpec = { ContentTransform(scaleIn(transformOrigin = TransformOrigin(0f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow)), scaleOut(transformOrigin = TransformOrigin(2f, 0f), animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessLow))) }
-                ) {
-                    Text(
-                        text = "${stringResource(R.string.semi_intensive)} - ${it.semiIntensiveSystem[key]} gm",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                    )
-                }
+                RadioButton(
+                    selected = option == options[selectedOption],
+                    onClick = { onOptionSelected(options.indexOf(option)) },
+                )
+                Text(
+                    text = option,
+                    fontSize = with(density) { if (option == options[selectedOption]) selectedFontSize.sp else unselectedFontSize.sp },
+                    style = MaterialTheme.typography.labelSmall,
+                    color = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primary)[options.indexOf(option)],
+                )
             }
         }
     }
@@ -279,6 +267,6 @@ fun RecommendationChartPreview() {
     Box(
         modifier = Modifier.background(Color.White)
     ) {
-        RecommendationChart(recommendation)
+        RecommendationChart(recommendation, 0)
     }
 }
