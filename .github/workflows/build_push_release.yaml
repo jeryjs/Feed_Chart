@@ -33,7 +33,32 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Prepare build
+      - name: Build app
+        run: |
+          set -e 
+          chmod +x ./gradlew && ./gradlew assembleRelease --stacktrace
+
+      - name: Sign Android Release
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Create TAG
+        run: |
+          version_name=$(grep "versionName" app/build.gradle.kts | awk '{print $3}' | tr -d '\"')
+          echo "VERSION_NAME=v$version_name" >> $GITHUB_ENV
+          
+          echo creating tag v$version_name
+          git tag "v$version_name"
+          git push origin "v$version_name"
+
+          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-v${version_name}.apk
+
+      - name: Get commit logs
         run: |
           set -e
 
@@ -52,50 +77,6 @@ jobs:
             | jq -r '.[]|"- \(.message | first) (@\(.username))"')
           {delimiter}" >> $GITHUB_ENV
 
-          version_name=$(grep "versionName" app/build.gradle.kts | awk '{print $3}' | tr -d \''"\\')
-          echo "VERSION_NAME=v$version_name" >> $GITHUB_ENV
-
-      - name: Set CHANGELOG
-        run: |
-          changelog="$(git log ${{ env.PREV_RELEASE_SHA }}..${{ env.CURRENT_SHA }} --pretty=format:'{{changelogtext}}%s (@%an){{!changelogtext}}')"
-          changelog="${changelog//$'%'/%25}"
-          changelog="${changelog//$'\n'/}"
-          changelog="${changelog//$'\r'/}"
-          changelog="${changelog//$'<'/}"
-          changelog="${changelog//$'>'/}"
-          changelog="${changelog//$'&'/}"
-          changelog="$(echo $changelog | sed -e 's/{{changelogtext}}/<changelogtext>/g')"
-          changelog="$(echo $changelog | sed -e 's/{{!changelogtext}}/<\/changelogtext>/g')"
-          changelog="<?xml version=\"1.0\" encoding=\"utf-8\"?><changelog bulletedList=\"true\"><changelogversion versionName=\"${{ env.VERSION_NAME }}\" changeDate=\"\">$changelog</changelogversion></changelog>"
-          echo "CHANGELOG=$changelog" >> $GITHUB_ENV
-
-      - name: Write changelog_debug.xml
-        uses: DamianReeves/write-file-action@v1.3
-        with:
-          path: app/src/main/res/raw/changelog_debug.xml
-          contents: "${{ env.CHANGELOG }}"
-          write-mode: overwrite
-
-      - name: Build app
-        run: chmod +x ./gradlew && ./gradlew assembleRelease --stacktrace
-
-      - name: Sign Android Release
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Clean up build artifacts
-        run: |
-          set -e
-
-          mv app/build/outputs/apk/release/app-release-unsigned-signed.apk FeedChart-${{ env.VERSION_NAME }}.apk
-          sha=$(sha256sum FeedChart-${{ env.VERSION_NAME }}.apk | awk '{ print $1 }')
-          echo "APK_UNIVERSAL_SHA=$sha" >> $GITHUB_ENV
-
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
@@ -108,13 +89,6 @@ jobs:
 
             ${{ env.COMMIT_LOGS }}
 
-            ---
-
-            ### Checksums
-
-            | Variant | SHA-256 |
-            | ------- | ------- |
-            | Universal | ${{ env.APK_UNIVERSAL_SHA }} |
           files: |
             FeedChart-${{ env.VERSION_NAME }}.apk
           draft: false

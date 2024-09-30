@@ -240,7 +240,8 @@ fun SystemTypeSelector(options: List<String>, selectedOption: Int, onOptionSelec
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .clickable(onClick = { onOptionSelected(options.indexOf(option)) })
-                    .animateContentSize(),
+                    .animateContentSize()
+                    .weight(1f),
             ) {
                 RadioButton(
                     selected = option == options[selectedOption],
