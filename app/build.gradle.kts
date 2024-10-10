@@ -12,8 +12,8 @@ android {
         applicationId = "com.jery.feedchart"
         minSdk = 24
         targetSdk = 35
-        versionCode = 7
-        versionName = "2.1.3"
+        versionCode = 8
+        versionName = "2.1.4"
     }
 
     buildTypes {
