@@ -200,7 +200,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType
             ),
             labelProperties = LabelProperties(enabled = true, textStyle = MaterialTheme.typography.labelSmall.copy(textAlign = TextAlign.End, color = MaterialTheme.colorScheme.primary)),
             barOverlayText = { label, value -> "${res.getString(if (label == res.getString(R.string.intensive_system)) R.string.intensive else R.string.semi_intensive)} - $value gm" },
-            barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)),
+            barOverlayStyle = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp, color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)),
             indicatorProperties = VerticalIndicatorProperties(enabled = false),
             labelHelperProperties = LabelHelperProperties(enabled = false),
             dividerProperties = DividerProperties(enabled = false),
