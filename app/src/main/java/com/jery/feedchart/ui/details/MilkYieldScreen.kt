@@ -144,7 +144,7 @@ fun FodderAvailabilitySelector(
         MultiOptionSwitch(
             options = FodderAvailability.entries.map { it.name },
             selectedOption = FodderAvailability.entries.indexOf(selectedFodderAvailability),
-            height = 44.dp,
+            backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
             modifier = Modifier
                 .fillMaxWidth()
                 .background(

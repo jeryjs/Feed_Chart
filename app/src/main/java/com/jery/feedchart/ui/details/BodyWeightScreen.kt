@@ -210,6 +210,7 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType
             options = listOf(stringResource(R.string.intensive_system), stringResource(R.string.semi_intensive_system)),
             selectedOption = selectedSystemType,
             buttonsAlignment = Alignment.Top,
+            backgroundColor = MaterialTheme.colorScheme.surface,
             modifier = Modifier.padding(16.dp),
         ) {
             onSystemTypeSelected(it)

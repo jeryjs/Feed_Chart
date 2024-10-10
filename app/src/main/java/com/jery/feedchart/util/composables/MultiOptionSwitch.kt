@@ -41,10 +41,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun MultiOptionSwitch(
-    modifier: Modifier = Modifier,
     options: List<String>,
     selectedOption: Int,
-    height: Dp = 64.dp,
     cornerRadius: Dp = 40.dp,
     selectedScale: Float = 1f,
     unselectedScale: Float = 0.7f,
@@ -55,6 +53,7 @@ fun MultiOptionSwitch(
     selectedTextColor: Color = MaterialTheme.colorScheme.primary,
     unselectedTextColor: Color = MaterialTheme.colorScheme.secondary,
     textStyle: TextStyle = MaterialTheme.typography.labelMedium,
+    modifier: Modifier = Modifier,
     onOptionSelected: (Int) -> Unit,
 ) {
     val density = LocalContext.current.resources.displayMetrics.density
@@ -63,18 +62,23 @@ fun MultiOptionSwitch(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(height)
+            .height(64.dp)
             .onSizeChanged { size ->
                 widgetWidth = size.width // Capture the width of the widget
             }
     ) {
-        val selectedFontSize = widgetWidth * 0.018f
-        val unselectedFontSize = widgetWidth * 0.018f
-        val fontScalingFactor by animateFloatAsState(selectedFontSize, tween(animationDuration))
-
         val transition = updateTransition(selectedOption, label = "slimeTransition")
-        val backgroundOffset by transition.animateFloat(transitionSpec = { tween(animationDuration, easing = FastOutSlowInEasing) }, label = "backgroundOffset") { ((widgetWidth / options.size) * it).toFloat() }
-        val backgroundWidth by transition.animateFloat(transitionSpec = { tween(animationDuration, easing = FastOutSlowInEasing) }, label = "backgroundWidth") { (widgetWidth / options.size + it).toFloat() }
+        val fontScalingFactor by animateFloatAsState(widgetWidth * 0.018f, tween(animationDuration))
+
+        val backgroundOffset by transition.animateFloat(
+            transitionSpec = { tween(animationDuration, easing = FastOutSlowInEasing) },
+            label = "backgroundOffset"
+        ) { ((widgetWidth / options.size) * it).toFloat() }
+
+        val backgroundWidth by transition.animateFloat(
+            transitionSpec = { tween(animationDuration, easing = FastOutSlowInEasing) },
+            label = "backgroundWidth"
+        ) { (widgetWidth / options.size + it).toFloat() }
 
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawRoundRect(
@@ -88,7 +92,7 @@ fun MultiOptionSwitch(
         Row(
             horizontalArrangement = buttonsArrangement,
             verticalAlignment = buttonsAlignment,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().align(Alignment.Center)
         ) {
             options.forEachIndexed { index, option ->
                 val scale by animateFloatAsState(
@@ -111,7 +115,7 @@ fun MultiOptionSwitch(
                 ) {
                     Text(
                         text = option,
-                        fontSize = with(density) { if (selectedOption == index) fontScalingFactor.sp else unselectedFontSize.sp },
+                        fontSize = with(density) { fontScalingFactor.sp },
                         textAlign = TextAlign.Center,
                         style = textStyle,
                         color = if (selectedOption == index) selectedTextColor else unselectedTextColor,
