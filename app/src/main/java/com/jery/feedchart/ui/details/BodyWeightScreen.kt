@@ -2,10 +2,14 @@ package com.jery.feedchart.ui.details
 
 import android.content.Context
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,23 +17,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -86,16 +97,12 @@ fun BodyWeightScreen(feedRecommendations: List<FeedRecommendation>) {
         ExpectedDailyGainDisplay(
             bodyWeight = selectedBodyWeight,
             feedRecommendations = feedRecommendations,
-            selectedSystemType = selectedSystemType
+            selectedSystemType = selectedSystemType,
+            onSystemTypeSelected = {
+                sharedPreferences.edit().putInt("selected_system_type_$feedRecHash", it).apply()
+                selectedSystemType = it
+            }
         )
-        Spacer(modifier = Modifier.height(12.dp))
-        SystemTypeSelector(
-            options = listOf(stringResource(R.string.intensive_system), stringResource(R.string.semi_intensive_system)),
-            selectedOption = selectedSystemType,
-        ) {
-            sharedPreferences.edit().putInt("selected_system_type_$feedRecHash", it).apply()
-            selectedSystemType = it
-        }
     }
 }
 
@@ -130,7 +137,8 @@ private fun BodyWeightSelector(
 private fun ExpectedDailyGainDisplay(
     bodyWeight: Int?,
     feedRecommendations: List<FeedRecommendation>,
-    selectedSystemType: Int
+    selectedSystemType: Int,
+    onSystemTypeSelected: (Int) -> Unit,
 ) {
     val recommendation = feedRecommendations.find { it.bodyWeight == bodyWeight }?.expectedDailyGain
 
@@ -146,16 +154,16 @@ private fun ExpectedDailyGainDisplay(
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(modifier = Modifier.height(12.dp))
-        RecommendationChart(recommendation!!, selectedSystemType)
+        RecommendationChart(recommendation!!, selectedSystemType, onSystemTypeSelected)
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType: Int) {
+fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType: Int, onSystemTypeSelected: (Int) -> Unit) {
     val size = expectedDailyGain.semiIntensiveSystem.values.count()
 
-    Box(
+    Column(
         modifier = Modifier.background(
             brush = Brush.horizontalGradient(
                 colors = listOf(
@@ -205,52 +213,96 @@ fun RecommendationChart(expectedDailyGain: ExpectedDailyGain, selectedSystemType
             ),
             popupProperties = PopupProperties(
                 enabled = true,
-                duration = 3000,
+                duration = 1500,
                 textStyle = MaterialTheme.typography.labelLarge.copy(color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.5f)),
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
             modifier = Modifier
                 .height((size * 60).dp)
-                .padding(16.dp),
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp),
         )
+
+        SystemTypeSelector(
+            options = listOf(stringResource(R.string.intensive_system), stringResource(R.string.semi_intensive_system)),
+            selectedOption = selectedSystemType,
+            modifier = Modifier.padding(16.dp),
+        ) {
+            onSystemTypeSelected(it)
+        }
     }
 }
 
 @Composable
-fun SystemTypeSelector(options: List<String>, selectedOption: Int, onOptionSelected: (Int) -> Unit) {
+fun SystemTypeSelector(
+    modifier: Modifier = Modifier,
+    options: List<String>,
+    selectedOption: Int,
+    onOptionSelected: (Int) -> Unit
+) {
     val density = LocalContext.current.resources.displayMetrics.density
-    val screenWidth = LocalConfiguration.current.screenWidthDp * density/4
-    // Adaptive font scaling factor based on both width and height
-    val fontScalingFactor = (screenWidth * 0.06f)
-    val selectedFontSize by animateFloatAsState(targetValue = fontScalingFactor)
-    val unselectedFontSize = selectedFontSize * 0.7f
+    var widgetWidth by remember { mutableIntStateOf(0) }
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(64.dp)
+            .onSizeChanged { size ->
+                widgetWidth = size.width // Capture the width of the widget
+            }
     ) {
-        options.forEach { option ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clickable(onClick = { onOptionSelected(options.indexOf(option)) })
-                    .animateContentSize()
-                    .weight(1f),
-            ) {
-                RadioButton(
-                    selected = option == options[selectedOption],
-                    onClick = { onOptionSelected(options.indexOf(option)) },
+        val selectedFontSize = widgetWidth * 0.02f
+        val unselectedFontSize = selectedFontSize * 0.9f
+        val fontScalingFactor by animateFloatAsState(selectedFontSize, tween(300))
+
+        val transition = updateTransition(selectedOption, label = "slimeTransition")
+        val backgroundOffset by transition.animateFloat(transitionSpec = { tween(500, easing = FastOutSlowInEasing) }, label = "backgroundOffset") { ((widgetWidth / options.size) * it).toFloat() }
+        val backgroundWidth by transition.animateFloat(transitionSpec = { tween(500, easing = FastOutSlowInEasing) }, label = "backgroundWidth") { (widgetWidth / options.size + it).toFloat() }
+
+        val clr = MaterialTheme.colorScheme
+
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            drawRoundRect(
+                color = clr.surface,
+                topLeft = Offset(backgroundOffset, 0f),
+                size = Size(backgroundWidth, size.height),
+                cornerRadius = CornerRadius(40f, 40f)
+            )
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            options.forEachIndexed { index, option ->
+                val scale by animateFloatAsState(
+                    targetValue = if (selectedOption == index) 1f else 0.7f,
+                    animationSpec = tween(300)
                 )
-                Text(
-                    text = option,
-                    fontSize = with(density) { if (option == options[selectedOption]) selectedFontSize.sp else unselectedFontSize.sp },
-                    style = MaterialTheme.typography.labelSmall,
-                    color = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primary)[options.indexOf(option)],
-                )
+
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .weight(1f)
+                        .scale(scale)
+                        .clip(RoundedCornerShape(50))
+                        .clickable { onOptionSelected(index) }
+                        .padding(vertical = 12.dp)
+                        .background(Color.Transparent)
+                ) {
+                    Text(
+                        text = option,
+                        fontSize = with(density) { if (selectedOption == index) fontScalingFactor.sp else unselectedFontSize.sp },
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.labelMedium,
+                        color = if (selectedOption == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
+                    )
+                }
             }
         }
     }
 }
+
 
 @Composable
 @Preview
@@ -262,6 +314,6 @@ fun RecommendationChartPreview() {
     Box(
         modifier = Modifier.background(Color.White)
     ) {
-        RecommendationChart(recommendation, 0)
+        RecommendationChart(recommendation, 0, {})
     }
 }

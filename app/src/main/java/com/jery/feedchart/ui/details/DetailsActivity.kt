@@ -98,7 +98,7 @@ class DetailsActivity : ComponentActivity() {
                             else -> null
                         }
 
-                        ActionChips(animalId)
+//                        ActionChips(animalId)
                     }
                 }
             }
