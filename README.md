@@ -24,12 +24,12 @@ FeedChart is a comprehensive application designed to provide detailed feed recom
   1. Go to the [Releases](https://github.com/jeryjs/Feed_Chart/releases/latest) page of the repository.
   2. Download the latest APK file from the list of assets.
       - If you are on a PC, transfer the APK file to your Android device.
-  4. Open the APK file on your device to install the application.
+  3. Open the APK file on your device to install the application.
   
 - ### From Google Play Store (coming soon)
   1. Open the Google Play Store on your Android device.
   2. Search for "[ICAR-NIANP Feed Chart](https://play.google.com/store/apps/details?id=com.borne.root.nianp_feedchart)".
-  4. Tap on the "Install" button to download and install the application.
+  3. Tap on the "Install" button to download and install the application.
 
 ##  Building from Source
 - ### Prerequisites

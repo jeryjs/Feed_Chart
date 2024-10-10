@@ -30,6 +30,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
 
+
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -52,7 +53,8 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.gson)
     implementation(libs.androidx.animation.graphics.android)
-    implementation (libs.composecharts)
+    implementation(libs.composecharts)
+    implementation(libs.richeditor.compose)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

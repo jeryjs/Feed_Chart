@@ -19,12 +19,13 @@ import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.ArrowForward
@@ -62,6 +63,9 @@ import com.jery.feedchart.R
 import com.jery.feedchart.data.repository.FeedRepository
 import com.jery.feedchart.ui.theme.FeedChartTheme
 import com.jery.feedchart.util.composables.BottomLanguageBar
+import com.mohamedrejeb.richeditor.model.rememberRichTextState
+import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
+import com.mohamedrejeb.richeditor.ui.material3.RichTextEditorDefaults
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Locale
@@ -81,14 +85,20 @@ class DetailsActivity : ComponentActivity() {
                     topBar = { MyAppBar(animalId) },
                     bottomBar = { BottomLanguageBar() },
                 ) { paddingValues ->
-                    Box(
-                        modifier = Modifier.padding(paddingValues)
+                    Column(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState())
+                            .fillMaxHeight()
                     ) {
                         when (feedRecommendations.first().displayType) {
                             0 -> MilkYieldScreen(feedRecommendations)
                             1 -> BodyWeightScreen(feedRecommendations)
                             else -> null
                         }
+
+                        ActionChips(animalId)
                     }
                 }
             }
@@ -130,13 +140,13 @@ fun MyAppBar(animalId: Int = 0) {
             }
         )
         if (showExtendedMenu)
-            ActionChips()
+            ActionChips(animalId)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActionChips() {
+fun ActionChips(animalId: Int) {
     var openBottomSheet by rememberSaveable { mutableStateOf(false) }
     var sheetContent by rememberSaveable { mutableStateOf("") }
     val context = LocalContext.current
@@ -173,7 +183,7 @@ fun ActionChips() {
         ) {
             when (sheetContent) {
                 "details" -> {
-                    ReckonerDetailsContent()
+                    ReckonerDetailsContent(animalId = animalId)
                 }
 
                 "request_form" -> {
@@ -230,46 +240,28 @@ fun ActionChip(text: String, onClick: () -> Unit) {
             )
         },
         colors = AssistChipDefaults.assistChipColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            labelColor = Color.White
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            labelColor = MaterialTheme.colorScheme.onPrimaryContainer,
         ),
         modifier = Modifier.padding(4.dp)
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReckonerDetailsContent() {
-    LazyColumn(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        item {
-            Text("Cattle Details", style = MaterialTheme.typography.titleLarge)
-        }
-        item {
-            Text(
-                "Here are the details for different cattle types:",
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
-        item {
-            Text("Dairy Cows", style = MaterialTheme.typography.titleMedium)
-            Text("Milk Yield: 15-25 liters per day", style = MaterialTheme.typography.bodySmall)
-            Text(
-                "Feed Type: High protein, moderate carbohydrates",
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        item {
-            Text("Buffaloes", style = MaterialTheme.typography.titleMedium)
-            Text("Milk Yield: 10-20 liters per day", style = MaterialTheme.typography.bodySmall)
-            Text(
-                "Feed Type: High fiber, moderate protein",
-                style = MaterialTheme.typography.bodySmall
-            )
-        }
-        // Add more detailed items as required.
-    }
+fun ReckonerDetailsContent(animalId: Int) {
+    val animalDetails = stringArrayResource(R.array.animal_details).getOrNull(animalId) ?: "Details not found"
+    val richTextState = rememberRichTextState()
+
+    richTextState.setMarkdown(animalDetails)
+
+    RichTextEditor(
+        state = richTextState,
+        readOnly = true,
+        colors = RichTextEditorDefaults.richTextEditorColors(
+            containerColor = Color.Transparent
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

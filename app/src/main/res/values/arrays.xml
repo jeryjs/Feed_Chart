@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array translatable="false" name="languages">
+        <item>English:en</item>
+        <item>Kannada:ka</item>
+    </string-array>
+
     <string-array name="animal_types">
         <item>Cow</item>
         <item>Buffalo</item>
@@ -16,8 +21,65 @@
         <item>@drawable/ic_animal_sheep</item>
     </integer-array>
 
-    <string-array name="languages">
-        <item>English:en</item>
-        <item>Kannada:ka</item>
+    <string-array name="animal_details">
+        <item><![CDATA[
+            ## Ready Reckoner for feeding of crossbred dairy cattle\n\n
+
+            **For 400 kg crossbred cow**\n
+            _ICAR-National Institute of Animal Nutrition and Physiology, Adugodi, Bangalore._\n\n
+
+            Compiled and Edited by\n
+            Dr.D.Rajendran, Dr. N.K.S. Gowda, Dr. S. Anandan, Dr. Letha Devi, Dr. K.S. Prasad and Dr. Artabandhu Sahoo\n\n
+
+            **Concentrate Mixture:**\n
+            It is prepared by mixing 30 parts of grains (maize, broken rice, bajra, sorghum or minor millets), 36 parts of brans and chunnis, 30 parts of oil cakes, 1.5 part salt, 1.5 part calcite, and 1 part mineral mixture.\n
+            Feed recommended level in three divided doses.\n\n
+
+            **Green roughage:**\n
+            Maize fodder, Bajra X Napier hybrid grass, para grass, sorghum, guinea grass, etc.\n
+            Recommended level of green grass should be chopped to one inch and fed in 2-3 divided quantities.\n\n
+
+            **Dry roughage:**\n
+            Paddy straw, wheat straw, sorghum stover, maize stover, dried areca sheath, dried grasses, etc.\n
+            Recommended level should be chopped to one inch and fed to dairy cows.\n
+        ]]></item>
+        <item><![CDATA[
+            ## Ready Reckoner for Feeding of Milch Buffalo\n\n
+
+            **For 450 kg buffalo**\n
+            _National Institute of Animal Nutrition and Physiology, ICAR, Adugodi, Bangalore._\n\n
+
+            Compiled by: Dr. D. Rajendran, Dr. K.S. Prasad, Dr. P.K. Malik, Dr. N.K.S. Gowda, etc.\n\n
+
+            **Concentrate Mixture:**\n
+            Mix 33 parts of grains, 31 parts of brans and chunnis, 33 parts of oil cakes, 1 part salt, and 2 parts mineral mixture.\n
+            Feed recommended level in three divided doses.\n\n
+
+            **Green fodder:**\n
+            Maize, Bajra, Napier hybrid grass, para grass, sorghum, guinea grass, etc.\n
+            If leguminous fodder is available, 5 kg of legume fodder can replace 1 kg of concentrate mixture.\n\n
+
+            **Dry roughage:**\n
+            Paddy straw, wheat straw, sorghum stover, maize stover, dried areca sheath, dried grasses, etc.\n
+            Recommended level should be chopped to one inch and fed to buffaloes.\n
+        ]]></item>
+        <item><![CDATA[
+            ## Feeding chart for fattening lambs\n\n
+
+            **Lamb Weight: 15-50 kg**\n
+            _ICAR-National Institute of Animal Nutrition and Physiology, Adugodi, Bangalore._\n\n
+
+            Compiled and designed by: D.Rajendran, Krishnappa Balaganur, S. Anandan, M. Gopi, etc.\n\n
+
+            **Concentrate Mixture:**\n
+            Mix 30 parts of grains, 34.5 parts of brans and chunnis, 32 parts of oil cakes, 0.5 part cooking soda, 1 part salt, and 2 parts sheep mineral mixture.\n\n
+
+            **Roughage:**\n
+            Groundnut haulms, pulse stalk and husk, hybrid napier grass, para grass, sorghum, guinea grass, etc.\n
+            Green or dry fodder should be chopped to one inch and fed free choice in 2-3 times a day or mixed with concentrate as TMR.\n\n
+
+            **Guideline:**\n
+            Feed concentrate gradually with good quality roughage for optimal growth. High concentrate feeding may be required for excellent weight gain, with proper care to avoid acidosis.\n
+        ]]></item>
     </string-array>
 </resources>
