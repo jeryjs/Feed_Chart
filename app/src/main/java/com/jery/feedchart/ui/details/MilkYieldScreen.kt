@@ -2,22 +2,18 @@ package com.jery.feedchart.ui.details
 
 import android.content.Context
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +38,7 @@ import com.jery.feedchart.data.model.FodderAvailability
 import com.jery.feedchart.data.repository.FeedRepository
 import com.jery.feedchart.util.composables.CustomPieChart
 import com.jery.feedchart.util.composables.CustomStepSlider
+import com.jery.feedchart.util.composables.MultiOptionSwitch
 import kotlin.collections.get
 
 @Composable
@@ -89,7 +85,7 @@ fun MilkYieldScreen(feedRecommendations: List<FeedRecommendation>) {
             }
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(42.dp))
 
         FeedRecommendationDisplay(
             milkYield = selectedMilkYield,
@@ -138,54 +134,30 @@ fun FodderAvailabilitySelector(
         Text(
             text = stringResource(R.string.green_fodder_availability),
             fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        RadioGroup(
-            selectedOption = selectedFodderAvailability,
-            onOptionSelected = { onFodderAvailabilitySelected(it) }
-        )
-    }
-}
-
-@Composable
-fun RadioGroup(selectedOption: FodderAvailability, onOptionSelected: (FodderAvailability) -> Unit) {
-    val density = LocalContext.current.resources.displayMetrics.density
-    val screenWidth = LocalConfiguration.current.screenWidthDp * density/4
-
-    // Adaptive font scaling factor based on both width and height
-    val fontScalingFactor = (screenWidth * 0.07f)
-    val selectedFontSize by animateFloatAsState(targetValue = fontScalingFactor)
-    val unselectedFontSize = selectedFontSize * 0.7f
-
-    Row {
-        FodderAvailability.entries.forEach { option ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .clickable { onOptionSelected(option) }
-                    .animateContentSize()
-            ) {
-                RadioButton(
-                    selected = option == selectedOption,
-                    onClick = { onOptionSelected(option) }
-                )
-                Text(
-                    text = option.name,
-                    fontSize = with(density) { if (option == selectedOption) selectedFontSize.sp else unselectedFontSize.sp },
-                    style = MaterialTheme.typography.labelSmall,
-                    color = when (option) {
-                        FodderAvailability.HIGH -> Color(0xFFFF0000) // High: Red
-                        FodderAvailability.MODERATE -> Color(0xFF008000) // Moderate: Green
-                        FodderAvailability.LOW -> Color(0xFF5F89B4) // Low: Grey
-                    }.copy(alpha = if (option == selectedOption) 1f else 0.6f),
-                    maxLines = 1,
-                    modifier = Modifier.animateContentSize()
-                )
-            }
+        MultiOptionSwitch(
+            options = FodderAvailability.entries.map { it.name },
+            selectedOption = FodderAvailability.entries.indexOf(selectedFodderAvailability),
+            height = 44.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.horizontalGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f)
+                        )
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                ),
+        ) {
+            onFodderAvailabilitySelected(FodderAvailability.entries[it])
         }
     }
 }
