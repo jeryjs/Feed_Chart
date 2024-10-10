@@ -97,8 +97,6 @@ class DetailsActivity : ComponentActivity() {
                             1 -> BodyWeightScreen(feedRecommendations)
                             else -> null
                         }
-
-//                        ActionChips(animalId)
                     }
                 }
             }
