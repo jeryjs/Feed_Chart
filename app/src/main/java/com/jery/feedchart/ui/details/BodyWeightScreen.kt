@@ -34,9 +34,9 @@ import androidx.compose.ui.unit.sp
 import com.jery.feedchart.R
 import com.jery.feedchart.data.model.ExpectedDailyGain
 import com.jery.feedchart.data.model.FeedRecommendation
-import com.jery.feedchart.util.composables.CustomRowChart
-import com.jery.feedchart.util.composables.CustomStepSlider
-import com.jery.feedchart.util.composables.MultiOptionSwitch
+import com.jery.feedchart.ui.composables.CustomRowChart
+import com.jery.feedchart.ui.composables.CustomStepSlider
+import com.jery.feedchart.ui.composables.MultiOptionSwitch
 import ir.ehsannarmani.compose_charts.models.AnimationMode
 import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars

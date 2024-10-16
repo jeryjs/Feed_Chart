@@ -36,9 +36,9 @@ import com.jery.feedchart.data.model.FeedDetails
 import com.jery.feedchart.data.model.FeedRecommendation
 import com.jery.feedchart.data.model.FodderAvailability
 import com.jery.feedchart.data.repository.FeedRepository
-import com.jery.feedchart.util.composables.CustomPieChart
-import com.jery.feedchart.util.composables.CustomStepSlider
-import com.jery.feedchart.util.composables.MultiOptionSwitch
+import com.jery.feedchart.ui.composables.CustomPieChart
+import com.jery.feedchart.ui.composables.CustomStepSlider
+import com.jery.feedchart.ui.composables.MultiOptionSwitch
 import kotlin.collections.get
 
 @Composable

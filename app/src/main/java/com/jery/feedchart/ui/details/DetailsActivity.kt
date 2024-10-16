@@ -61,8 +61,8 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import com.jery.feedchart.R
 import com.jery.feedchart.data.repository.FeedRepository
+import com.jery.feedchart.ui.composables.BottomLanguageBar
 import com.jery.feedchart.ui.theme.FeedChartTheme
-import com.jery.feedchart.util.composables.BottomLanguageBar
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditorDefaults

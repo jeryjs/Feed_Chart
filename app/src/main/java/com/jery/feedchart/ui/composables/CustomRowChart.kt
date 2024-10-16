@@ -1,4 +1,4 @@
-package com.jery.feedchart.util.composables
+package com.jery.feedchart.ui.composables
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec

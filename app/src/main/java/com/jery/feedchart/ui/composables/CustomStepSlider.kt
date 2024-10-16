@@ -1,4 +1,4 @@
-package com.jery.feedchart.util.composables
+package com.jery.feedchart.ui.composables
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateColorAsState
