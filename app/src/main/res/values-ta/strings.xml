@@ -1,0 +1,33 @@
+<resources>
+    <string translatable="false" name="app_name">Feed Chart</string>
+    <string name="app_title">கம்பவாசல் கோவை, பசு, எருமை, செம்மறி ஆடுகளுக்கான அன்றாட தீவன பட்டியல்</string>
+    <string name="app_description">நாங்க கம்பவாசல் கோவை பசு, எருமை, செம்மறி ஆடுகளுக்கான அன்றாட ரேஷன் மேக்கிங்குக்காக இந்த ஆப்லிகேஷன் மேட்புனோம்.
+பசுக்களுக்கு மொத்தம் 5, 7.5, 10, 12.5, 15, 20 லிட்டர்/நாள் பால் குடிக்கிற அளவுக்கு ரேஷன் கொடுக்குறோம். பசு 400kg-க்கு ஏற்பவும், பச்சை புல் எவ்வளவு கிடைக்குதோ அதுக்கு ஏற்பவும் ரேஷன் செஞ்சுருக்கோம்.
+எருமைக்கு மொத்தம் 3, 6, 9, 12 லிட்டர்/நாள் பால் குடிக்கிற அளவுக்கு ரேஷன் கொடுக்குறோம். எருமை 450kg-க்கு ஏற்பவும், பச்சை புல் கிடைக்கிற அளவுக்கு ஏற்பவும் ரேஷன் செஞ்சுருக்கோம் (High, moderate, low).</string>
+
+    <string name="feed_recommendation">தீவன பரிந்துரை (ஒரு நாளுக்கு)</string>
+    <string name="concentrate">கான்சென்ட்ரேட்</string>
+    <string name="green_fodder">பச்சை புல்</string>
+    <string name="dry_roughage">உலர் களவு</string>
+
+    <string name="details">விவரங்கள்</string>
+    <string name="request_form">கோரிக்கை படிவம்</string>
+    <string name="feedback">பின்னூட்டம்</string>
+
+    <string name="high">அதிக</string>
+    <string name="moderate">மிதமான</string>
+    <string name="low">குறைந்த</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">மேலும் படிக்க…</string>
+
+    <string name="milk_yield_lit_day">பால் விளைவு (லிட்டர்/நாள்)</string>
+    <string name="green_fodder_availability">பச்சை புல் கிடைக்கும் அளவு</string>
+    <string name="feed_recommendation_per_day">தீவன பரிந்துரை (ஒரு நாளுக்கு)</string>
+
+    <string name="body_weight_kg">எடை (கிலோ)</string>
+    <string name="expected_daily_gain_kg_day">ஒரு நாளைக்கு எதிர்பார்க்கப்படும் எடை (கிலோ)</string>
+    <string name="semi_intensive_system">குறுகிய கடும் மேய்ச்சல் முறை</string>
+    <string name="semi_intensive">குறுகிய கடும்</string>
+    <string name="intensive_system">முழு கடும் மேய்ச்சல் முறை</string>
+    <string name="intensive">முழு கடும்</string>
+</resources>

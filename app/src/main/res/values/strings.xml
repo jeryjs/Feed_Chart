@@ -12,9 +12,9 @@
     <string name="request_form">Request Form</string>
     <string name="feedback">Feedback</string>
 
-    <string name="high_green">High Green</string>
-    <string name="moderate_green">Moderate Green</string>
-    <string name="low_green">Low Green</string>
+    <string name="high">High</string>
+    <string name="moderate">Moderate</string>
+    <string name="low">Low</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="read_more">Read More…</string>
 

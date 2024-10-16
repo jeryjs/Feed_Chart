@@ -108,6 +108,7 @@ private fun MilkYieldSelector(
     ) {
         Text(
             text = stringResource(R.string.milk_yield_lit_day),
+            textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
@@ -142,7 +143,7 @@ fun FodderAvailabilitySelector(
         Spacer(modifier = Modifier.height(8.dp))
 
         MultiOptionSwitch(
-            options = FodderAvailability.entries.map { it.name },
+            options = FodderAvailability.entries.map { stringResource(it.stringResId).uppercase() },
             selectedOption = FodderAvailability.entries.indexOf(selectedFodderAvailability),
             backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
             modifier = Modifier

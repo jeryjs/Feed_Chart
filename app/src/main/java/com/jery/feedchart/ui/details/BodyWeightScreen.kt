@@ -104,6 +104,7 @@ private fun BodyWeightSelector(
         Text(
             text = stringResource(R.string.body_weight_kg),
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary,
         )

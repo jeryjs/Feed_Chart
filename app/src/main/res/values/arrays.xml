@@ -2,7 +2,7 @@
 <resources>
     <string-array translatable="false" name="languages">
         <item>English:en</item>
-        <item>Kannada:ka</item>
+        <item>Tamil:ta</item>
     </string-array>
 
     <string-array name="animal_types">

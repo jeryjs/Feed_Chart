@@ -1,6 +1,8 @@
 package com.jery.feedchart.data.model
 
+import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
+import com.jery.feedchart.R
 import kotlin.math.floor
 
 data class FeedDetails(
@@ -20,11 +22,11 @@ data class FeedDetails(
     val dryRoughageString get() = dryRoughage.toIntIfNoDecimals()
 }
 
-enum class FodderAvailability {
+enum class FodderAvailability(@StringRes val stringResId: Int) {
     @SerializedName("high")
-    HIGH,
+    HIGH(R.string.high),
     @SerializedName("moderate")
-    MODERATE,
+    MODERATE(R.string.moderate),
     @SerializedName("low")
-    LOW
+    LOW(R.string.low)
 }
