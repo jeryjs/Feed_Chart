@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">संकरित दुधाळू गाय, म्हैस आणि मेंढींसाठी आहार तक्ता</string>
+    <string name="app_description">संकरित दुधाळू गाय, म्हैस आणि मेंढींसाठी आहार तयार करण्यासाठी एक अँड्रॉइड ॲप्लिकेशन सादर करताना आम्हाला आनंद होत आहे.\n400 किलो वजनाच्या गाईसाठी, दुग्धोत्पादन (उदा. 5, 7.5, 10, 12.5, 15 आणि 20 लिटर/दिवस) आणि दररोज हिरव्या चाऱ्याच्या उपलब्धतेनुसार संतुलित आहार तयार केला आहे.\nत्याचप्रमाणे, 450 किलो वजनाच्या दुधाळू म्हशीसाठी, दुग्धोत्पादन (उदा. 3, 6, 9 आणि 12 लिटर/दिवस) आणि दररोज हिरव्या चाऱ्याच्या उपलब्धतेनुसार (जास्त, मध्यम आणि कमी) संतुलित आहार तयार केला आहे.</string>
+
+    <string name="feed_recommendation">आहाराची शिफारस (प्रतिदिन)</string>
+    <string name="concentrate">खाद्य मिश्रण</string>
+    <string name="green_fodder">हिरवा चारा</string>
+    <string name="dry_roughage">सुका चारा</string>
+
+    <string name="details">तपशील</string>
+    <string name="request_form">मागणी अर्ज</string>
+    <string name="feedback">अभिप्राय</string>
+
+    <string name="high">जास्त</string>
+    <string name="moderate">मध्यम</string>
+    <string name="low">कमी</string>
+    <string name="title_activity_details">तपशील ॲक्टिव्हिटी</string>
+    <string name="read_more">पुढे वाचा…</string>
+
+    <string name="milk_yield_lit_day">दुधाचे उत्पादन (लिटर/दिवस)</string>
+    <string name="green_fodder_availability">हिरव्या चाऱ्याची उपलब्धता</string>
+    <string name="feed_recommendation_per_day">आहाराची शिफारस (प्रतिदिन)</string>
+
+    <string name="body_weight_kg">शरीराचे वजन (किलो)</string>
+    <string name="expected_daily_gain_kg_day">अपेक्षित दैनिक वाढ (किलो/दिवस)</string>
+    <string name="semi_intensive_system">अर्ध-बंदिस्त पद्धत</string>
+    <string name="semi_intensive">अर्ध-बंदिस्त</string>
+    <string name="intensive_system">बंदिस्त पद्धत</string>
+    <string name="intensive">बंदिस्त</string>
+</resources>

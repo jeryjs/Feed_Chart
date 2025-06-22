@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">ಕ್ರಾಸ್‌ಬ್ರೆಡ್ ಹಾಲು ಕರೆಯುವ ಹಸು, ಎಮ್ಮೆ ಮತ್ತು ಕುರಿಗಳಿಗೆ ಆಹಾರ ಪಟ್ಟಿ</string>
+    <string name="app_description">ಕ್ರಾಸ್‌ಬ್ರೆಡ್ ಹಾಲು ಕರೆಯುವ ಹಸು, ಹಾಲು ಕರೆಯುವ ಎಮ್ಮೆ ಮತ್ತು ಕುರಿಗಳಿಗೆ ಪಡಿತರ ತಯಾರಿಸಲು ಆಂಡ್ರಾಯ್ಡ್ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಪರಿಚಯಿಸಲು ನಮಗೆ ಸಂತೋಷವಾಗಿದೆ.\n400 ಕೆಜಿ ತೂಕದ ಹಸುವಿಗೆ, ದಿನಕ್ಕೆ 5, 7.5, 10, 12.5, 15 ಮತ್ತು 20 ಲೀಟರ್ ಹಾಲು ಉತ್ಪಾದನೆಗೆ ಮತ್ತು ದಿನಕ್ಕೆ ಹಸಿರು ಮೇವಿನ ಲಭ್ಯತೆಯ ಮಟ್ಟಗಳಿಗೆ ಅನುಗುಣವಾಗಿ ಸಮತೋಲಿತ ಪಡಿತರವನ್ನು ರೂಪಿಸಲಾಗಿದೆ.\nಅದೇ ರೀತಿ, 450 ಕೆಜಿ ತೂಕದ ಹಾಲು ಕರೆಯುವ ಎಮ್ಮೆಗೆ ದಿನಕ್ಕೆ 3, 6, 9 ಮತ್ತು 12 ಲೀಟರ್ ಹಾಲು ಉತ್ಪಾದನೆಗೆ ಮತ್ತು ದಿನಕ್ಕೆ ಹಸಿರು ಮೇವಿನ ಲಭ್ಯತೆಯ ಮಟ್ಟಗಳಿಗೆ (ಹೆಚ್ಚು, ಮಧ್ಯಮ ಮತ್ತು ಕಡಿಮೆ) ಅನುಗುಣವಾಗಿ ಸಮತೋಲಿತ ಪಡಿತರವನ್ನು ರೂಪಿಸಲಾಗಿದೆ.</string>
+
+    <string name="feed_recommendation">ಆಹಾರ ಶಿಫಾರಸು (ದಿನಕ್ಕೆ)</string>
+    <string name="concentrate">ಕೇಂದ್ರೀಕೃತ ಆಹಾರ</string>
+    <string name="green_fodder">ಹಸಿರು ಮೇವು</string>
+    <string name="dry_roughage">ಒಣ ಮೇವು</string>
+
+    <string name="details">ವಿವರಗಳು</string>
+    <string name="request_form">ವಿನಂತಿ ಫಾರ್ಮ್</string>
+    <string name="feedback">ಪ್ರತಿಕ್ರಿಯೆ</string>
+
+    <string name="high">ಹೆಚ್ಚು</string>
+    <string name="moderate">ಮಧ್ಯಮ</string>
+    <string name="low">ಕಡಿಮೆ</string>
+    <string name="title_activity_details">ವಿವರಗಳ ಚಟುವಟಿಕೆ</string>
+    <string name="read_more">ಹೆಚ್ಚು ಓದಿ…</string>
+
+    <string name="milk_yield_lit_day">ಹಾಲು ಇಳುವರಿ (ಲೀಟರ್/ದಿನ)</string>
+    <string name="green_fodder_availability">ಹಸಿರು ಮೇವಿನ ಲಭ್ಯತೆ</string>
+    <string name="feed_recommendation_per_day">ಆಹಾರ ಶಿಫಾರಸು (ದಿನಕ್ಕೆ)</string>
+
+    <string name="body_weight_kg">ದೇಹದ ತೂಕ (ಕೆಜಿ)</string>
+    <string name="expected_daily_gain_kg_day">ನಿರೀಕ್ಷಿತ ದೈನಂದಿನ ಹೆಚ್ಚಳ (ಕೆಜಿ/ದಿನ)</string>
+    <string name="semi_intensive_system">ಅರೆ-ತೀವ್ರ ವ್ಯವಸ್ಥೆ</string>
+    <string name="semi_intensive">ಅರೆ-ತೀವ್ರ</string>
+    <string name="intensive_system">ತೀವ್ರ ವ್ಯವಸ್ಥೆ</string>
+    <string name="intensive">ತೀವ್ರ</string>
+</resources>

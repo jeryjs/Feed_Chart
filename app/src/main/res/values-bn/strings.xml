@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">ক্রস ব্রিড দুগ্ধবতী গরু, মহিষ ও ভেড়ার জন্য খাদ্য তালিকা</string>
+    <string name="app_description">ক্রস ব্রিড দুগ্ধবতী গরু, মহিষ ও ভেড়ার জন্য খাবার তৈরির একটি অ্যান্ড্রয়েড অ্যাপ্লিকেশন চালু করতে পেরে আমরা খুব আনন্দিত।\n400 কেজি ওজনের একটি গরুর জন্য, প্রতিদিনের দুধ উৎপাদন (যেমন 5, 7.5, 10, 12.5, 15 এবং 20 লিটার/দিন) এবং প্রতিদিন সবুজ পশুখাদ্যের প্রাপ্যতার উপর ভিত্তি করে সুষম রেশন তৈরি করা হয়েছে।\nএকইভাবে, 450 কেজি ওজনের দুগ্ধবতী মহিষের জন্য, প্রতিদিনের দুধ উৎপাদন (যেমন 3, 6, 9 এবং 12 লিটার/দিন) এবং প্রতিদিন সবুজ পশুখাদ্যের প্রাপ্যতার (বেশি, মাঝারি এবং কম) উপর ভিত্তি করে সুষম রেশন তৈরি করা হয়েছে।</string>
+
+    <string name="feed_recommendation">খাদ্য সুপারিশ (প্রতিদিন)</string>
+    <string name="concentrate">দানা</string>
+    <string name="green_fodder">সবুজ পশুখাদ্য</string>
+    <string name="dry_roughage">শুকনো পশুখাদ্য</string>
+
+    <string name="details">বিস্তারিত</string>
+    <string name="request_form">অনুরোধ ফর্ম</string>
+    <string name="feedback">মতামত</string>
+
+    <string name="high">বেশি</string>
+    <string name="moderate">মাঝারি</string>
+    <string name="low">কম</string>
+    <string name="title_activity_details">বিস্তারিত অ্যাক্টিভিটি</string>
+    <string name="read_more">আরও পড়ুন…</string>
+
+    <string name="milk_yield_lit_day">দুধের উৎপাদন (লিটার/দিন)</string>
+    <string name="green_fodder_availability">সবুজ পশুখাদ্যের সহজলভ্যতা</string>
+    <string name="feed_recommendation_per_day">খাদ্য সুপারিশ (প্রতিদিন)</string>
+
+    <string name="body_weight_kg">শারীরিক ওজন (কেজি)</string>
+    <string name="expected_daily_gain_kg_day">প্রত্যাশিত দৈনিক ওজন বৃদ্ধি (কেজি/দিন)</string>
+    <string name="semi_intensive_system">আধা-নিবিড় পদ্ধতি</string>
+    <string name="semi_intensive">আধা-নিবিড়</string>
+    <string name="intensive_system">নিবিড় পদ্ধতি</string>
+    <string name="intensive">নিবিড়</string>
+</resources>

@@ -1,10 +1,5 @@
 package com.jery.feedchart.ui.home
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -48,25 +43,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jery.feedchart.R
 import com.jery.feedchart.ui.composables.BottomLanguageBar
-import com.jery.feedchart.ui.details.DetailsActivity
-import com.jery.feedchart.ui.theme.FeedChartTheme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        setContent {
-            FeedChartTheme {
-                HomeScreen { animalId ->
-                    val intent = Intent(this, DetailsActivity::class.java)
-                    intent.putExtra("ANIMAL_ID", animalId)
-                    startActivity(intent)
-                }
-            }
-        }
-    }
-}
 
 @Preview
 @Composable
@@ -120,14 +96,16 @@ fun HomeScreen(onAnimalClick: (Int) -> Unit = {}) {
 fun MyAppBar() {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors().copy(
-            containerColor = if(isSystemInDarkTheme()) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
+            containerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
         ),
         title = {
             Image(
                 painter = painterResource(id = R.drawable.icar_nianp_header),
                 contentDescription = null,
                 alignment = Alignment.Center,
-                modifier = Modifier.fillMaxWidth().padding(end = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp)
             )
         },
         modifier = Modifier.padding(0.dp)
@@ -160,7 +138,7 @@ private fun AppDescription() {
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp).fillMaxWidth()
         ) {
             Text(
                 text = stringResource(R.string.app_title),

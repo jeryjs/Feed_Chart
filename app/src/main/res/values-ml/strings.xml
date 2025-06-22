@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">സങ്കരയിനം കറവപ്പശു, എരുമ, ചെമ്മരിയാട് എന്നിവയുടെ തീറ്റ പട്ടിക</string>
+    <string name="app_description">സങ്കരയിനം കറവപ്പശുക്കൾക്കും, എരുമകൾക്കും, ചെമ്മരിയാടുകൾക്കും തീറ്റ തയ്യാറാക്കാൻ സഹായിക്കുന്ന ഒരു ആൻഡ്രോയിഡ് ആപ്ലിക്കേഷൻ അവതരിപ്പിക്കുന്നതിൽ ഞങ്ങൾക്ക് സന്തോഷമുണ്ട്.\n400 കിലോ ഭാരമുള്ള പശുക്കൾക്ക് പ്രതിദിനം 5, 7.5, 10, 12.5, 15, 20 ലിറ്റർ പാൽ ഉത്പാദനത്തിനും, പ്രതിദിനം ലഭ്യമാകുന്ന പച്ചപ്പുല്ലിന്റെ അളവിനും അനുസരിച്ച് സമീകൃത തീറ്റ ക്രമീകരിച്ചിട്ടുണ്ട്.\nഅതുപോലെ, 450 കിലോ ഭാരമുള്ള എരുമകൾക്ക് പ്രതിദിനം 3, 6, 9, 12 ലിറ്റർ പാൽ ഉത്പാദനത്തിനും, പ്രതിദിനം ലഭ്യമാകുന്ന പച്ചപ്പുല്ലിന്റെ അളവിനും (കൂടിയത്, ഇടത്തരം, കുറഞ്ഞത്) അനുസരിച്ച് സമീകൃത തീറ്റ ക്രമീകരിച്ചിട്ടുണ്ട്.</string>
+
+    <string name="feed_recommendation">തീറ്റ നിർദ്ദേശം (പ്രതിദിനം)</string>
+    <string name="concentrate">തീറ്റ മിശ്രിതം</string>
+    <string name="green_fodder">പച്ചപ്പുല്ല്</string>
+    <string name="dry_roughage">ഉണങ്ങിയ തീറ്റ</string>
+
+    <string name="details">വിവരങ്ങൾ</string>
+    <string name="request_form">അഭ്യർത്ഥന ഫോം</string>
+    <string name="feedback">അഭിപ്രായം</string>
+
+    <string name="high">കൂടിയത്</string>
+    <string name="moderate">ഇടത്തരം</string>
+    <string name="low">കുറഞ്ഞത്</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">കൂടുതൽ വായിക്കുക…</string>
+
+    <string name="milk_yield_lit_day">പാൽ ഉത്പാദനം (ലിറ്റർ/ദിവസം)</string>
+    <string name="green_fodder_availability">പച്ചപ്പുല്ലിന്റെ ലഭ്യത</string>
+    <string name="feed_recommendation_per_day">തീറ്റ നിർദ്ദേശം (പ്രതിദിനം)</string>
+
+    <string name="body_weight_kg">ശരീരഭാരം (കിലോ)</string>
+    <string name="expected_daily_gain_kg_day">പ്രതീക്ഷിക്കുന്ന പ്രതിദിന ഭാര വർദ്ധന (കിലോ/ദിവസം)</string>
+    <string name="semi_intensive_system">സെമി ഇന്റൻസീവ് സിസ്റ്റം</string>
+    <string name="semi_intensive">സെമി ഇന്റൻസീവ്</string>
+    <string name="intensive_system">ഇന്റൻസീവ് സിസ്റ്റം</string>
+    <string name="intensive">ഇന്റൻസീവ്</string>
+</resources>

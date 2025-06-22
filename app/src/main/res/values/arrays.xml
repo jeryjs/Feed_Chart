@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array translatable="false" name="languages">
+    <string-array name="languages" translatable="false">
         <item>English:en</item>
-        <item>Tamil:ta</item>
+        <item>हिंदी:hi</item>
+        <item>தமிழ்:ta</item>
+        <item>മലയാളം:ml</item>
+        <item>ಕನ್ನಡ:kn</item>
+        <item>తెలుగు:te</item>
+        <item>বাংলা:bn</item>
+        <item>ଓଡ଼ିଆ:or</item>
+        <item>অসমীয়া:as</item>
     </string-array>
 
     <string-array name="animal_types">

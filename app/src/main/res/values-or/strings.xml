@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">ହାଇବ୍ରିଡ୍ କ୍ଷୀର ଦେଉଥିବା ଗାଈ, ମହିଷି ଓ ମେଣ୍ଢା ପାଇଁ ଖାଦ୍ୟ ତାଲିକା</string>
+    <string name="app_description">ହାଇବ୍ରିଡ୍ କ୍ଷୀର ଦେଉଥିବା ଗାଈ, ମହିଷି ଓ ମେଣ୍ଢାମାନଙ୍କ ପାଇଁ ଖାଦ୍ୟ ଯୋଜନା କରିବା ପାଇଁ ଏକ ଆଣ୍ଡ୍ରଏଡ୍ ଆପ୍ଲିକେସନ୍ ପ୍ରସ୍ତୁତ କରି ଆମେ ବହୁତ ଖୁସି।\n400 କିଲୋଗ୍ରାମ ଓଜନର ଗାଈ ପାଇଁ, ପ୍ରତିଦିନ 5, 7.5, 10, 12.5, 15 ଏବଂ 20 ଲିଟର କ୍ଷୀର ଉତ୍ପାଦନ ଏବଂ ପ୍ରତିଦିନ ସବୁଜ ଚାରା ଉପଲବ୍ଧତାକୁ ଆଧାର କରି ସନ୍ତୁଳିତ ଖାଦ୍ୟ ଯୋଜନା କରାଯାଇଛି।\nସେହିପରି, 450 କିଲୋଗ୍ରାମ ଓଜନର କ୍ଷୀର ଦେଉଥିବା ମହିଷି ପାଇଁ, ପ୍ରତିଦିନ 3, 6, 9 ଏବଂ 12 ଲିଟର କ୍ଷୀର ଉତ୍ପାଦନ ଏବଂ ପ୍ରତିଦିନ ସବୁଜ ଚାରା ଉପଲବ୍ଧତା (ଅଧିକ, ମଧ୍ୟମ ଏବଂ କମ୍) ଆଧାରରେ ସନ୍ତୁଳିତ ଖାଦ୍ୟ ଯୋଜନା କରାଯାଇଛି।</string>
+
+    <string name="feed_recommendation">ଖାଦ୍ୟ ସୁପାରିଶ (ପ୍ରତିଦିନ)</string>
+    <string name="concentrate">ଦାନା</string>
+    <string name="green_fodder">ସବୁଜ ଚାରା</string>
+    <string name="dry_roughage">ଶୁଖିଲା ଚାରା</string>
+
+    <string name="details">ବିବରଣୀ</string>
+    <string name="request_form">ଅନୁରୋଧ ଫର୍ମ</string>
+    <string name="feedback">ମତାମତ</string>
+
+    <string name="high">ଅଧିକ</string>
+    <string name="moderate">ମଧ୍ୟମ</string>
+    <string name="low">କମ୍</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">ଆହୁରି ପଢ଼ନ୍ତୁ…</string>
+
+    <string name="milk_yield_lit_day">କ୍ଷୀର ଉତ୍ପାଦନ (ଲିଟର/ଦିନ)</string>
+    <string name="green_fodder_availability">ସବୁଜ ଚାରା ଉପଲବ୍ଧତା</string>
+    <string name="feed_recommendation_per_day">ଖାଦ୍ୟ ସୁପାରିଶ (ପ୍ରତିଦିନ)</string>
+
+    <string name="body_weight_kg">ଶରୀରର ଓଜନ (କିଲୋଗ୍ରାମ)</string>
+    <string name="expected_daily_gain_kg_day">ପ୍ରତ୍ୟହ ଆଶା କରାଯାଉଥିବା ଓଜନ ବୃଦ୍ଧି (କିଲୋଗ୍ରାମ/ଦିନ)</string>
+    <string name="semi_intensive_system">ଅର୍ଦ୍ଧ ସଘନ ପ୍ରଣାଳୀ</string>
+    <string name="semi_intensive">ଅର୍ଦ୍ଧ ସଘନ</string>
+    <string name="intensive_system">ସଘନ ପ୍ରଣାଳୀ</string>
+    <string name="intensive">ସଘନ</string>
+</resources>

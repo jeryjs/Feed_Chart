@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">संकर दुधारू गाय, भैंस और भेड़ के लिए चारा गाइड</string>
+    <string name="app_description">हमें यह एंड्रॉइड ऐप पेश करते हुए खुशी हो रही है, जो संकर दुधारू गाय, भैंस और भेड़ के लिए चारा बनाने में मदद करता है।\nइसमें 400 किलो की गाय के लिए, दूध उत्पादन (जैसे 5, 7.5, 10, 12.5, 15 और 20 लीटर/दिन) और हरे चारे की दैनिक उपलब्धता के हिसाब से संतुलित आहार बताया गया है।\nइसी तरह, 450 किलो की दुधारू भैंस के लिए भी दूध उत्पादन (जैसे 3, 6, 9 और 12 लीटर/दिन) और हरे चारे की उपलब्धता (ज़्यादा, मध्यम और कम) के आधार पर संतुलित आहार बताया गया है।</string>
+
+    <string name="feed_recommendation">आहार सुझाव (प्रति दिन)</string>
+    <string name="concentrate">दाना</string>
+    <string name="green_fodder">हरा चारा</string>
+    <string name="dry_roughage">सूखा चारा</string>
+
+    <string name="details">जानकारी</string>
+    <string name="request_form">रिक्वेस्ट फॉर्म</string>
+    <string name="feedback">फ़ीडबैक</string>
+
+    <string name="high">ज़्यादा</string>
+    <string name="moderate">मध्यम</string>
+    <string name="low">कम</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">और पढ़ें…</string>
+
+    <string name="milk_yield_lit_day">दूध उत्पादन (लीटर/दिन)</string>
+    <string name="green_fodder_availability">हरे चारे की उपलब्धता</string>
+    <string name="feed_recommendation_per_day">आहार सुझाव (प्रति दिन)</string>
+
+    <string name="body_weight_kg">शरीर का वज़न (किलो)</string>
+    <string name="expected_daily_gain_kg_day">अपेक्षित दैनिक वज़न वृद्धि (किलो/दिन)</string>
+    <string name="semi_intensive_system">अर्ध-गहन प्रणाली</string>
+    <string name="semi_intensive">अर्ध-गहन</string>
+    <string name="intensive_system">गहन प्रणाली</string>
+    <string name="intensive">गहन</string>
+</resources>

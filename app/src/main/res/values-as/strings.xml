@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">সংকৰ গাখীৰতী গৰু, মহ আৰু ভেড়াৰ বাবে খাদ্যৰ তালিকা</string>
+    <string name="app_description">সংকৰ গাখীৰতী গৰু, মহ আৰু ভেড়াৰ বাবে খাদ্য প্ৰস্তুত কৰিবলৈ এই এণ্ড্ৰইড এপ্লিকেচনটো আগবঢ়াই আমি সুখী।\n৪০০ কেজি ওজনৰ গৰুৰ বাবে, প্ৰতিদিনে ৫, ৭.৫, ১০, ১২.৫, ১৫ আৰু ২০ লিটাৰ গাখীৰ উৎপাদন আৰু প্ৰতিদিনে সেউজীয়া ঘাঁহৰ উপলব্ধতাৰ ওপৰত ভিত্তি কৰি সুষম ৰেচন প্ৰস্তুত কৰা হৈছে।\nএকেদৰে, ৪৫০ কেজি ওজনৰ গাখীৰতী মহৰ বাবেও প্ৰতিদিনে ৩, ৬, ৯ আৰু ১২ লিটাৰ গাখীৰ উৎপাদন আৰু সেউজীয়া ঘাঁহৰ উপলব্ধতা (বেছি, মজলীয়া আৰু কম) অনুসৰি সুষম ৰেচন প্ৰস্তুত কৰা হৈছে।</string>
+
+    <string name="feed_recommendation">খাদ্যৰ পৰামৰ্শ (প্ৰতিদিনে)</string>
+    <string name="concentrate">দানা</string>
+    <string name="green_fodder">সেউজীয়া ঘাঁহ</string>
+    <string name="dry_roughage">শুকান খেৰ জাতিয় খাদ্য</string>
+
+    <string name="details">বিৱৰণ</string>
+    <string name="request_form">অনুবোধ পত্ৰ</string>
+    <string name="feedback">মতামত</string>
+
+    <string name="high">বেছি</string>
+    <string name="moderate">মজলীয়া</string>
+    <string name="low">কম</string>
+    <string name="title_activity_details">বিৱৰণ কাৰ্য্য</string>
+    <string name="read_more">আৰু পঢ়ক…</string>
+
+    <string name="milk_yield_lit_day">গাখীৰ উৎপাদন (লিটাৰ/দিন)</string>
+    <string name="green_fodder_availability">সেউজীয়া ঘাঁহৰ উপলব্ধতা</string>
+    <string name="feed_recommendation_per_day">খাদ্যৰ পৰামৰ্শ (প্ৰতিদিনে)</string>
+
+    <string name="body_weight_kg">শৰীৰৰ ওজন (কেজি)</string>
+    <string name="expected_daily_gain_kg_day">প্ৰত্যাশিত দৈনিক শৰীৰৰ ওজন বৃদ্ধি (কেজি/দিন)</string>
+    <string name="semi_intensive_system">চেমি-ইনটেনচিভ সিস্টেম</string>
+    <string name="semi_intensive">চেমি-ইনটেনচিভ</string>
+    <string name="intensive_system">ইনটেনচিভ সিস্টেম</string>
+    <string name="intensive">ইনটেনচিভ</string>
+</resources>

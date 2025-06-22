@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_title">క్రాస్ బ్రీడ్ పాలిచ్చే ఆవు, గేదె &amp; గొర్రెల దాణా గైడ్</string>
+    <string name="app_description">క్రాస్ బ్రీడ్ పాలిచ్చే ఆవు, గేదె &amp; గొర్రెల కోసం దాణా తయారుచేయడానికి ఈ ఆండ్రాయిడ్ అప్లికేషన్ ని పరిచయం చేయడానికి మాకు చాలా సంతోషంగా ఉంది.\n400 కిలోల ఆవుకి రోజుకు 5, 7.5, 10, 12.5, 15 మరియు 20 లీటర్ల పాలు ఇచ్చేలా, అందుబాటులో ఉన్న పచ్చి మేతను బట్టి సమతుల్య దాణాను తయారుచేస్తారు.\nఅలాగే, 450 కిలోల పాలిచ్చే గేదెకు రోజుకు 3, 6, 9 మరియు 12 లీటర్ల పాలు ఇచ్చేలా, అందుబాటులో ఉన్న పచ్చి మేత (ఎక్కువ, మధ్యస్థం మరియు తక్కువ) ఆధారంగా సమతుల్య దాణాను తయారుచేస్తారు.</string>
+
+    <string name="feed_recommendation">ఆహార సిఫార్సు (రోజుకు)</string>
+    <string name="concentrate">దాణా</string>
+    <string name="green_fodder">పచ్చి మేత</string>
+    <string name="dry_roughage">పొడి మేత</string>
+
+    <string name="details">వివరాలు</string>
+    <string name="request_form">అభ్యర్థన ఫారం</string>
+    <string name="feedback">అభిప్రాయం</string>
+
+    <string name="high">ఎక్కువ</string>
+    <string name="moderate">మధ్యస్థం</string>
+    <string name="low">తక్కువ</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="read_more">ఇంకా చదవండి…</string>
+
+    <string name="milk_yield_lit_day">పాల దిగుబడి (లీటర్/రోజు)</string>
+    <string name="green_fodder_availability">పచ్చి మేత లభ్యత</string>
+    <string name="feed_recommendation_per_day">ఆహార సిఫార్సు (రోజుకు)</string>
+
+    <string name="body_weight_kg">శరీర బరువు (కిలోలు)</string>
+    <string name="expected_daily_gain_kg_day">రోజుకు ఆశించిన పెరుగుదల (కిలో/రోజు)</string>
+    <string name="semi_intensive_system">సెమీ ఇంటెన్సివ్ సిస్టం</string>
+    <string name="semi_intensive">సెమీ ఇంటెన్సివ్</string>
+    <string name="intensive_system">ఇంటెన్సివ్ సిస్టం</string>
+    <string name="intensive">ఇంటెన్సివ్</string>
+</resources>
