@@ -133,14 +133,18 @@ fun MyAppBar(animalId: Int = 0) {
                 }
             },
             colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = if(isSystemInDarkTheme()) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                containerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.inversePrimary else MaterialTheme.colorScheme.primary,
+                titleContentColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary,
+                navigationIconContentColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onPrimary
             ),
             actions = {
                 IconButton(onClick = { showExtendedMenu = !showExtendedMenu }) {
                     Image(
-                        painter = rememberAnimatedVectorPainter(AnimatedImageVector.animatedVectorResource(R.drawable.anim_more_enter), showExtendedMenu),
+                        painter = rememberAnimatedVectorPainter(
+                            AnimatedImageVector.animatedVectorResource(
+                                R.drawable.anim_more_enter
+                            ), showExtendedMenu
+                        ),
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
                         modifier = Modifier.rotate(90f)
@@ -201,7 +205,13 @@ fun ActionChips(animalId: Int) {
                             val requestForm = downloadRequestFormAsPdf(context as Activity)
                             requestForm?.let {
                                 val intent = Intent(Intent.ACTION_VIEW).apply {
-                                    setDataAndType(FileProvider.getUriForFile(context, "${context.packageName}.provider", it), "application/pdf")
+                                    setDataAndType(
+                                        FileProvider.getUriForFile(
+                                            context,
+                                            "${context.packageName}.provider",
+                                            it
+                                        ), "application/pdf"
+                                    )
                                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                 }
                                 context.startActivity(intent)
@@ -211,11 +221,20 @@ fun ActionChips(animalId: Int) {
                             val intent = Intent(Intent.ACTION_SEND).apply {
                                 type = "application/pdf"
                                 putExtra(Intent.EXTRA_SUBJECT, "Request Form")
-                                putExtra(Intent.EXTRA_TEXT, "Please find the request form attached.")
+                                putExtra(
+                                    Intent.EXTRA_TEXT,
+                                    "Please find the request form attached."
+                                )
                                 val inputStream = context.assets.open("request_form.pdf")
                                 val file = File(context.cacheDir, "request_form.pdf")
-                                inputStream.use { input -> file.outputStream().use { output -> input.copyTo(output) } }
-                                val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
+                                inputStream.use { input ->
+                                    file.outputStream().use { output -> input.copyTo(output) }
+                                }
+                                val uri = FileProvider.getUriForFile(
+                                    context,
+                                    "${context.packageName}.provider",
+                                    file
+                                )
                                 putExtra(Intent.EXTRA_STREAM, uri)
                                 putExtra(Intent.EXTRA_EMAIL, arrayOf("rajnutri@gmail.com"))
                                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -259,7 +278,8 @@ fun ActionChip(text: String, onClick: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReckonerDetailsContent(animalId: Int) {
-    val animalDetails = stringArrayResource(R.array.animal_details).getOrNull(animalId) ?: "Details not found"
+    val animalDetails =
+        stringArrayResource(R.array.animal_details).getOrNull(animalId) ?: "Details not found"
     val richTextState = rememberRichTextState()
 
     richTextState.setMarkdown(animalDetails)
@@ -287,12 +307,22 @@ fun RequestFormContent(onDownload: () -> Unit, onSendMail: () -> Unit) {
         ) {
             Text("Request Form", style = MaterialTheme.typography.titleLarge)
             Row {
-                IconButton(onClick = onSendMail, colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                IconButton(
+                    onClick = onSendMail,
+                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                ) {
                     Icon(Icons.Default.Email, contentDescription = "Email")
                 }
-                IconButton(onClick = onDownload, colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)) {
+                IconButton(
+                    onClick = onDownload,
+                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                ) {
                     @Suppress("DEPRECATION")
-                    Icon(Icons.Outlined.ArrowForward, contentDescription = null, modifier = Modifier.rotate(90f))
+                    Icon(
+                        Icons.Outlined.ArrowForward,
+                        contentDescription = null,
+                        modifier = Modifier.rotate(90f)
+                    )
                 }
             }
         }
@@ -328,7 +358,8 @@ private fun downloadRequestFormAsPdf(context: Activity): File? {
         Toast.makeText(context, "${outputFile.name} saved to Downloads", Toast.LENGTH_LONG).show()
         return outputFile
     } catch (e: Exception) {
-        Toast.makeText(context, "Failed to download request form: ${e.message}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Failed to download request form: ${e.message}", Toast.LENGTH_LONG)
+            .show()
         return null
     }
 }
