@@ -1,6 +1,7 @@
 package com.jery.feedchart.ui.details
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.os.Environment
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.animateContentSize
@@ -32,6 +34,7 @@ import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,8 +46,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -56,6 +62,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
@@ -63,6 +70,7 @@ import com.jery.feedchart.R
 import com.jery.feedchart.data.repository.FeedRepository
 import com.jery.feedchart.ui.composables.BottomLanguageBar
 import com.jery.feedchart.ui.theme.FeedChartTheme
+import com.jery.feedchart.util.LocaleUtils
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditorDefaults
@@ -71,6 +79,9 @@ import java.io.File
 import java.util.Locale
 
 class DetailsActivity : ComponentActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleUtils.wrapContext(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,14 +118,14 @@ class DetailsActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun MyAppBar(animalId: Int = 0) {
-    val activity = LocalContext.current as Activity
+    val activity = LocalActivity.current
     var showExtendedMenu by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.animateContentSize()) {
         TopAppBar(
             title = { Text(text = stringArrayResource(R.array.animal_desc)[animalId]) },
             navigationIcon = {
-                IconButton(onClick = { activity.finish() }) {
+                IconButton(onClick = { activity?.finish() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_back),
                         contentDescription = "Go Back"
@@ -155,15 +166,15 @@ fun ActionChips(animalId: Int) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxWidth()
     ) {
-        ActionChip(text = "Details", onClick = {
+        ActionChip(text = stringResource(R.string.details), onClick = {
             sheetContent = "details"
             openBottomSheet = true
         })
-        ActionChip(text = "Request Form", onClick = {
+        ActionChip(text = stringResource(R.string.request_form), onClick = {
             sheetContent = "request_form"
             openBottomSheet = true
         })
-        ActionChip(text = "Feedback", onClick = {
+        ActionChip(text = stringResource(R.string.feedback), onClick = {
             val feedbackIntent = Intent(
                 Intent.ACTION_VIEW,
 //                Uri.parse("market://details?id=" + context.packageName)
@@ -262,7 +273,6 @@ fun ReckonerDetailsContent(animalId: Int) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RequestFormContent(onDownload: () -> Unit, onSendMail: () -> Unit) {
     Column(
@@ -288,7 +298,10 @@ fun RequestFormContent(onDownload: () -> Unit, onSendMail: () -> Unit) {
         }
         LocalContext.current.resources.openRawResource(R.raw.request_form).use { image ->
             val bitmap = BitmapFactory.decodeStream(image)
-            Card {
+            Card(
+                // Set background to White to avoid the pdf not being visible on dark mode
+                colors = CardDefaults.cardColors(containerColor = Color.White)
+            ) {
                 Image(
                     bitmap = bitmap.asImageBitmap(),
                     contentDescription = "Request Form",
