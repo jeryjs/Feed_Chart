@@ -28,7 +28,7 @@ class LocaleUtils(private val context: Context) {
         Locale.setDefault(locale)
         val config = Configuration(context.resources.configuration)
         config.setLocale(locale)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
+        context.createConfigurationContext(config)
     }
 
     companion object {
